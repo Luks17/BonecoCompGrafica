@@ -16,6 +16,11 @@ $ gcc -o main -lGL -lGLU -lglut robo.c && ./main
 - [x] Definir estrutura do código
 - [ ] Corrigir bug em que as pernas ficão cortadas pelo viewport
 - [ ] Documentar código
-- [ ] Fazer torso do boneco
-- [ ] Animações
+- [ ] Fazer parte de cima do quadril do boneco
+  - [ ] Torso
+  - [ ] Braços
+  - [ ] Cabeça
 - [ ] Menu para trocar animação
+- [ ] Animações
+  - [ ] Corrida
+  - [ ] Tchauzinho

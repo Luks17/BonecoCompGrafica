@@ -3,6 +3,11 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
 
+// A altura do torso define as dimensões de todos os outros elementos
+#define TORSO_HEIGHT 0.8
+#define TORSO_WIDTH TORSO_HEIGHT * 0.75
+#define TORSO TORSO_WIDTH / 3.0
+
 #define FOOT_JOINT_SIZE HEAD_JOINT_SIZE
 #define FOOT_HEIGHT FOOT_JOINT_SIZE * 2.0
 #define FOOT_WIDTH LO_LEG_WIDTH
@@ -16,9 +21,6 @@
 #define HAND_HEIGHT LO_ARM_HEIGHT / 2.0
 #define HAND_WIDTH LO_ARM_WIDTH
 #define HAND LO_ARM_WIDTH / 2.0
-#define TORSO_WIDTH TORSO_HEIGHT * 0.75
-#define TORSO_HEIGHT 0.8
-#define TORSO TORSO_WIDTH / 3.0
 #define HEAD_WIDTH HEAD_HEIGHT * 0.93
 #define HEAD_HEIGHT TORSO_HEIGHT * 0.375
 #define HEAD_JOINT_SIZE HEAD_HEIGHT / 6

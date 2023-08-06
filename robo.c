@@ -7,8 +7,8 @@ int main(int argc, char **argv) {
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
   glutInitWindowSize(400, 400);
   glutReshapeFunc(reshape);
-  glutCreateWindow("Trabalho de Comp Grafica");
   glutDisplayFunc(display);
+  glutCreateWindow("Trabalho de Comp Grafica");
 
   init();
 
