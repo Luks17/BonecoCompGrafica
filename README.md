@@ -1,2 +1,21 @@
 # MinecraftCompGrafica
-Minecraft
+
+Projeto 3d para a nota da P2 de Computação Gráfica
+
+## Como rodar
+
+Este projeto requer GCC e FreeGlut instalado para funcionar
+
+```bash
+$ gcc -o main -lGL -lGLU -lglut robo.c && ./main
+```
+
+## Roadmap
+
+- [x] Pernas do boneco
+- [x] Definir estrutura do código
+- [ ] Corrigir bug em que as pernas ficão cortadas pelo viewport
+- [ ] Documentar código
+- [ ] Fazer torso do boneco
+- [ ] Animações
+- [ ] Menu para trocar animação
