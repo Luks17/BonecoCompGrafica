@@ -121,6 +121,8 @@ void menuPrincipal(int option) {
     // TODO: desfazer transformacoes futuras aqui tb
     posicaoX = posicaoY = 0;
     posicaoZ = LIMITE;
+    coordenadaEstaAumentando[0] = coordenadaEstaAumentando[1] =
+        coordenadaEstaAumentando[2] = true;
     break;
   }
 
