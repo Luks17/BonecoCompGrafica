@@ -2,6 +2,7 @@
 #include <GL/freeglut_std.h>
 #include <GL/gl.h>
 #include <GL/glut.h>
+#include <stdio.h>
 
 // A altura do torso define as dimensões de todos os outros elementos
 #define TORSO_HEIGHT 0.8
@@ -40,6 +41,9 @@ void init();
 void display();
 void reshape(int, int);
 void kbd(unsigned char, int, int);
+void mouseHandler(int, int, int, int);
+void criaMenu();
+void menuPrincipal(int);
 void quadril();
 void perna();
 void panturrilha();
