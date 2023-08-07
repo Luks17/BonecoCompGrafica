@@ -7,14 +7,15 @@ Projeto 3d para a nota da P2 de Computação Gráfica
 Este projeto requer GCC e FreeGlut instalado para funcionar
 
 ```bash
-$ gcc -o main -lGL -lGLU -lglut robo.c && ./main
+$ gcc -o main -lGL -lGLU -lglut main.c && ./main
 ```
 
 ## Roadmap
 
 - [x] Pernas do boneco
 - [x] Definir estrutura do código
-- [x] Corrigir bug em que as pernas ficão cortadas pelo viewport
+- [x] Profundidade
+- [x] Movimentação da camera
 - [ ] Documentar código
 - [ ] Fazer parte de cima do quadril do boneco
   - [ ] Torso
