@@ -25,7 +25,7 @@ void coxa() {
   glPushMatrix();
 
   glScalef(UP_LEG_WIDTH, UP_LEG_HEIGHT, UP_LEG_WIDTH);
-  glColor3f(1.0, 1.0, 0.0);
+  glColor3f(0.5, 0.5, 0.5);
   glutSolidCube(1.0);
 
   glPopMatrix();
@@ -55,8 +55,19 @@ void panturrilha() {
 void pe() {
   glPushMatrix();
 
-  glScalef(1.0, 0.5, 1.0);
-  glColor3f(1.0, 1.0, 1.0);
+  // desenha tornozelo
+  glScalef(FOOT_JOINT_SIZE, FOOT_JOINT_SIZE, FOOT_JOINT_SIZE);
+  glColor3f(0.0, 1.0, 0.0);
+  glutSolidSphere(1.0, 8, 8);
+
+  glPopMatrix();
+
+  glTranslatef(0.0, -FOOT_HEIGHT * 0.75, 0.0);
+
+  glPushMatrix();
+
+  glScalef(0.2, 0.1, 1.0);
+  glColor3f(0.5, 0.0, 1.0);
 
   glutSolidCube(1.0);
 
