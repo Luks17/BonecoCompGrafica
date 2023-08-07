@@ -6,7 +6,7 @@ void quadril() {
 
   glScalef(BASE_WIDTH, BASE_HEIGHT, TORSO);
   glColor3f(0.0, 1.0, 1.0);
-  glutSolidCube(1.0);
+  glutWireCube(1.0);
 
   glPopMatrix();
 }
@@ -16,7 +16,7 @@ void coxa() {
 
   glScalef(UP_LEG_JOINT_SIZE, UP_LEG_JOINT_SIZE, UP_LEG_JOINT_SIZE);
   glColor3f(0.0, 1.0, 0.0);
-  glutSolidSphere(1.0, 8, 8);
+  glutWireSphere(1.0, 8, 8);
 
   glPopMatrix();
 
@@ -26,7 +26,7 @@ void coxa() {
 
   glScalef(UP_LEG_WIDTH, UP_LEG_HEIGHT, UP_LEG_WIDTH);
   glColor3f(0.5, 0.5, 0.5);
-  glutSolidCube(1.0);
+  glutWireCube(1.0);
 
   glPopMatrix();
 }
@@ -37,7 +37,7 @@ void panturrilha() {
   // desenha joelho
   glScalef(LO_LEG_JOINT_SIZE, LO_LEG_JOINT_SIZE, LO_LEG_JOINT_SIZE);
   glColor3f(0.0, 1.0, 0.0);
-  glutSolidSphere(1.0, 8, 8);
+  glutWireSphere(1.0, 8, 8);
 
   glPopMatrix();
 
@@ -47,7 +47,7 @@ void panturrilha() {
 
   glScalef(LO_LEG_WIDTH, LO_LEG_HEIGHT, LO_LEG_WIDTH);
   glColor3f(1.0, 0.0, 1.0);
-  glutSolidCube(1.0);
+  glutWireCube(1.0);
 
   glPopMatrix();
 }
@@ -58,7 +58,7 @@ void pe() {
   // desenha tornozelo
   glScalef(FOOT_JOINT_SIZE, FOOT_JOINT_SIZE, FOOT_JOINT_SIZE);
   glColor3f(0.0, 1.0, 0.0);
-  glutSolidSphere(1.0, 8, 8);
+  glutWireSphere(1.0, 8, 8);
 
   glPopMatrix();
 
@@ -69,7 +69,7 @@ void pe() {
   glScalef(0.2, 0.1, 1.0);
   glColor3f(0.5, 0.0, 1.0);
 
-  glutSolidCube(1.0);
+  glutWireCube(1.0);
 
   glPopMatrix();
 };
