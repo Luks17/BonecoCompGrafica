@@ -1,5 +1,6 @@
 
 #include "modelo.c"
+#include "movimento.c"
 
 // variaveis de perspectiva
 // inicializados em init()
@@ -7,7 +8,8 @@ GLfloat fov, aspecto;
 
 // variaveis da camera
 // posições da camera no espaço
-float posicaoX = 0.0, posicaoY = 0.0, posicaoZ = 1.2;
+// LIMITE esta definido em movimento.h
+float posicaoX = 0.0, posicaoY = 0.0, posicaoZ = LIMITE;
 
 int main(int argc, char **argv) {
   glutInit(&argc, argv);
@@ -17,6 +19,7 @@ int main(int argc, char **argv) {
   glutCreateWindow("Trabalho de Comp Grafica");
   glutDisplayFunc(display);
   glutReshapeFunc(reshape);
+  glutKeyboardFunc(kbd);
 
   init();
 
@@ -36,11 +39,37 @@ void init() {
 
 void display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glLoadIdentity();
+  gluLookAt(posicaoX, posicaoY, posicaoZ, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
   quadril();
   pernas();
 
   glutSwapBuffers();
+}
+
+void kbd(unsigned char key, int x, int y) {
+
+  switch (key) {
+  case 'w':
+    ajustaCoordenada(&posicaoZ, coordz, true);
+    ajustaCoordenada(&posicaoY, coordy, true);
+    break;
+  case 's':
+    ajustaCoordenada(&posicaoZ, coordz, false);
+    ajustaCoordenada(&posicaoY, coordy, false);
+    break;
+  case 'a':
+    ajustaCoordenada(&posicaoZ, coordz, false);
+    ajustaCoordenada(&posicaoX, coordx, false);
+    break;
+  case 'd':
+    ajustaCoordenada(&posicaoZ, coordz, true);
+    ajustaCoordenada(&posicaoX, coordx, true);
+    break;
+  }
+
+  glutPostRedisplay();
 }
 
 void reshape(int w, int h) {
@@ -59,5 +88,4 @@ void reshape(int w, int h) {
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  gluLookAt(posicaoX, posicaoY, posicaoZ, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 }

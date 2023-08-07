@@ -39,6 +39,7 @@
 void init();
 void display();
 void reshape(int, int);
+void kbd(unsigned char, int, int);
 void quadril();
 void perna();
 void panturrilha();
