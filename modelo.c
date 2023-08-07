@@ -66,7 +66,7 @@ void pe() {
 
   glPushMatrix();
 
-  glScalef(0.2, 0.1, 1.0);
+  glScalef(FOOT_WIDTH, FOOT_HEIGHT, FOOT_WIDTH);
   glColor3f(0.5, 0.0, 1.0);
 
   glutWireCube(1.0);
