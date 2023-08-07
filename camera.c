@@ -1,5 +1,5 @@
 
-#include "movimento.h"
+#include "camera.h"
 
 // equivalente ao enum coord, ou seja:
 // coordenadaEstaAumentando[0] = x

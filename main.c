@@ -1,6 +1,6 @@
 
+#include "camera.c"
 #include "modelo.c"
-#include "movimento.c"
 
 // variaveis de perspectiva
 // inicializados em init()
