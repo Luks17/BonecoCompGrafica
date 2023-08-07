@@ -33,7 +33,7 @@ void init() {
   glShadeModel(GL_FLAT);
   glEnable(GL_DEPTH_TEST);
 
-  fov = 130;
+  fov = 65;
   aspecto = 1;
 }
 
@@ -84,7 +84,7 @@ void reshape(int w, int h) {
   // znear é o corte mais próximo da camera e
   // zfar é o corte mais longe da camera
   // gluPerspective deve ser sempre modificado no GL_PROJECTION
-  gluPerspective(fov, aspecto, 0.1, 500);
+  gluPerspective(fov, aspecto, 1.0, 40.0);
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();

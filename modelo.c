@@ -62,11 +62,11 @@ void pe() {
 
   glPopMatrix();
 
-  glTranslatef(0.0, -FOOT_HEIGHT * 0.75, 0.0);
+  glTranslatef(0.0, -FOOT_HEIGHT * 0.75, FOOT_WIDTH * 0.5);
 
   glPushMatrix();
 
-  glScalef(FOOT_WIDTH, FOOT_HEIGHT, FOOT_WIDTH);
+  glScalef(FOOT_WIDTH, FOOT_HEIGHT, FOOT);
   glColor3f(0.5, 0.0, 1.0);
 
   glutWireCube(1.0);
