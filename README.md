@@ -21,7 +21,7 @@ $ gcc -o main -lGL -lGLU -lglut main.c && ./main
   - [ ] Torso
   - [ ] Braços
   - [ ] Cabeça
-- [ ] Menu para trocar animação
+- [x] Menu para trocar animação
 - [ ] Animações
   - [ ] Corrida
   - [ ] Tchauzinho

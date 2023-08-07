@@ -20,6 +20,7 @@ int main(int argc, char **argv) {
   glutDisplayFunc(display);
   glutReshapeFunc(reshape);
   glutKeyboardFunc(kbd);
+  glutMouseFunc(mouseHandler);
 
   init();
 
@@ -88,4 +89,40 @@ void reshape(int w, int h) {
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
+}
+
+void mouseHandler(int btn, int state, int x, int y) {
+  if (btn == GLUT_RIGHT_BUTTON) {
+    if (state == GLUT_DOWN)
+      criaMenu();
+  }
+
+  glutPostRedisplay();
+}
+
+void criaMenu() {
+  int menu = glutCreateMenu(menuPrincipal);
+  glutAddMenuEntry("Corrida", 0);
+  glutAddMenuEntry("Acenando", 1);
+  glutAddMenuEntry("Voltar a posicao inicial", 2);
+
+  glutAttachMenu(GLUT_RIGHT_BUTTON);
+};
+
+void menuPrincipal(int option) {
+  switch (option) {
+  case 0:
+    printf("Opção 'Corrida' selecionada\n");
+    break;
+  case 1:
+    printf("Opção 'Acenando' selecionada\n");
+    break;
+  case 2:
+    // TODO: desfazer transformacoes futuras aqui tb
+    posicaoX = posicaoY = 0;
+    posicaoZ = LIMITE;
+    break;
+  }
+
+  glutPostRedisplay();
 }
