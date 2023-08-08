@@ -1,6 +1,6 @@
-# MinecraftCompGrafica
+# Boneco 3D para computação gráfica
 
-Projeto 3d para a nota da P2 de Computação Gráfica
+Este é um projeto 3D, feito com FreeGlut, para o trabalho equivalente à nota da P2 de Computação Gráfica. 
 
 ## Como rodar
 
