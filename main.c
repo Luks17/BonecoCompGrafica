@@ -47,7 +47,7 @@ void display() {
   pernas();
   torso();
   cabeca();
-  // bracos();
+  bracos();
 
   glutSwapBuffers();
 }

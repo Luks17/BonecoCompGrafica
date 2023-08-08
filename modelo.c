@@ -128,21 +128,43 @@ void torso() {
   glPopMatrix();
 }
 
-void braco() {
+void antebraco() {
+  glPushMatrix();
+
+  glTranslatef(0.0, -LO_ARM_JOINT_SIZE * 4, 0.0);
+
   glPushMatrix();
 
   glColor3f(0.0, 1.0, 0.0);
-  glTranslatef(0.0, TORSO_HEIGHT * 0.875 + BASE_HEIGHT / 2.0, 0.0);
+  glScalef(LO_ARM_JOINT_SIZE, LO_ARM_JOINT_SIZE, LO_ARM_JOINT_SIZE);
+  glutWireSphere(1.0, 8, 8);
 
+  glPopMatrix();
+
+  glColor3f(0.5, 0.1, 0.3);
+  glTranslatef(0.0, -LO_ARM_JOINT_SIZE - LO_ARM_HEIGHT / 2, 0.0);
+
+  glScalef(LO_ARM_WIDTH, LO_ARM_HEIGHT, LO_ARM_WIDTH);
+  glutWireCube(1.0);
+
+  glPopMatrix();
+}
+
+void braco() {
+  glPushMatrix();
+
+  glTranslatef(0.0, -UP_ARM_JOINT_SIZE * 2, 0.0);
+
+  glPushMatrix();
+
+  glColor3f(0.0, 1.0, 0.0);
   glScalef(UP_ARM_JOINT_SIZE, UP_ARM_JOINT_SIZE, UP_ARM_JOINT_SIZE);
   glutWireSphere(1.0, 8, 8);
 
   glPopMatrix();
 
-  glPushMatrix();
-
   glColor3f(0.5, 0.1, 0.3);
-  glTranslatef(0.0, TORSO_HEIGHT * 0.65, 0.0);
+  glTranslatef(0.0, -UP_ARM_JOINT_SIZE - UP_ARM_HEIGHT / 2, 0.0);
 
   glScalef(UP_ARM_WIDTH, UP_ARM_HEIGHT, UP_ARM_WIDTH);
   glutWireCube(1.0);
@@ -150,14 +172,24 @@ void braco() {
   glPopMatrix();
 }
 
-void antebraco() {}
-
 void bracos() {
   glPushMatrix();
 
-  glTranslatef(TORSO_WIDTH * 0.66, 0.0, 0.0);
-  braco();
+  glTranslatef(TORSO_WIDTH * 0.66, LO_ARM_HEIGHT, 0.0);
   antebraco();
+
+  glTranslatef(0.0, UP_ARM_HEIGHT * 0.875 + LO_ARM_JOINT_SIZE * 2, 0.0);
+  braco();
+
+  glPopMatrix();
+
+  glPushMatrix();
+
+  glTranslatef(TORSO_WIDTH * (-0.66), LO_ARM_HEIGHT, 0.0);
+  antebraco();
+
+  glTranslatef(0.0, UP_ARM_HEIGHT * 0.875 + LO_ARM_JOINT_SIZE * 2, 0.0);
+  braco();
 
   glPopMatrix();
 }
