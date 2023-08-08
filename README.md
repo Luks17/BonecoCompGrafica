@@ -18,9 +18,9 @@ $ gcc -o main -lGL -lGLU -lglut main.c && ./main
 - [x] Movimentação da camera
 - [ ] Documentar código
 - [ ] Fazer parte de cima do quadril do boneco
-  - [ ] Torso
+  - [x] Torso
   - [ ] Braços
-  - [ ] Cabeça
+  - [x] Cabeça
 - [x] Menu para trocar animação
 - [ ] Animações
   - [ ] Corrida
