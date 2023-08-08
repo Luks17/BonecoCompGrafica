@@ -1,5 +1,6 @@
 
 #include "modelo.h"
+#include "animacao.c"
 
 void quadril() {
   glPushMatrix();
@@ -78,17 +79,17 @@ void pe() {
   glPopMatrix();
 };
 
-void perna() {
+void perna(enum lados lado) {
   glPushMatrix();
 
-  // glRotatef(walking_angles[side][3], 1.0, 0.0, 0.0);
+  // glRotatef(frames[lado][3], 1.0, 0.0, 0.0);
   coxa();
   glTranslatef(0.0, -UP_LEG_HEIGHT * 0.75, 0.0);
-  // glRotatef(walking_angles[side][4], 1.0, 0.0, 0.0);
+  // glRotatef(frames[lado][4], 1.0, 0.0, 0.0);
 
   panturrilha();
   glTranslatef(0.0, -LO_LEG_HEIGHT * 0.625, 0.0);
-  // glRotatef(walking_angles[side][5], 1.0, 0.0, 0.0);
+  // glRotatef(frames[lado][5], 1.0, 0.0, 0.0);
 
   pe();
 
@@ -104,13 +105,13 @@ void pernas() {
   // perna direita
   glPushMatrix();
   glTranslatef(TORSO_WIDTH * 0.33, 0.0, 0.0);
-  perna();
+  perna(DIREITA);
   glPopMatrix();
 
   // perna esquerda
   glPushMatrix();
   glTranslatef(-TORSO_WIDTH * 0.33, 0.0, 0.0);
-  perna();
+  perna(ESQUERDA);
   glPopMatrix();
 
   glPopMatrix();

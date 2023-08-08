@@ -1,7 +1,11 @@
 
+#ifndef MODELO_H
+#define MODELO_H
+
 #include <GL/freeglut_std.h>
 #include <GL/gl.h>
 #include <GL/glut.h>
+#include <math.h>
 #include <stdio.h>
 
 // A altura do torso define as dimensões de todos os outros elementos
@@ -37,6 +41,10 @@
   UP_LEG_HEIGHT + LO_LEG_HEIGHT + FOOT_HEIGHT +                                \
       2 * (FOOT_JOINT_SIZE + UP_LEG_JOINT_SIZE + LO_LEG_JOINT_SIZE)
 
+#define PI 3.141592
+
+enum lados { ESQUERDA, DIREITA };
+
 void init();
 void display();
 void reshape(int, int);
@@ -45,7 +53,7 @@ void mouseHandler(int, int, int, int);
 void criaMenu();
 void menuPrincipal(int);
 void quadril();
-void perna();
+void perna(enum lados);
 void panturrilha();
 void pe();
 void coxa();
@@ -55,3 +63,5 @@ void braco();
 void antebraco();
 void bracos();
 void cabeca();
+
+#endif
