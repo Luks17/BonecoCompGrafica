@@ -82,14 +82,14 @@ void pe() {
 void perna(enum lados lado) {
   glPushMatrix();
 
-  // glRotatef(frames[lado][3], 1.0, 0.0, 0.0);
+  // glRotatef(keyWalkFrames[lado][3], 1.0, 0.0, 0.0);
   coxa();
   glTranslatef(0.0, -UP_LEG_HEIGHT * 0.75, 0.0);
-  // glRotatef(frames[lado][4], 1.0, 0.0, 0.0);
+  // glRotatef(keyWalkFrames[lado][4], 1.0, 0.0, 0.0);
 
   panturrilha();
   glTranslatef(0.0, -LO_LEG_HEIGHT * 0.625, 0.0);
-  // glRotatef(frames[lado][5], 1.0, 0.0, 0.0);
+  // glRotatef(keyWalkFrames[lado][5], 1.0, 0.0, 0.0);
 
   pe();
 

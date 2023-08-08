@@ -1,6 +1,7 @@
 
 #include "camera.c"
 #include "modelo.c"
+#include "modelo.h"
 
 // variaveis de perspectiva
 // inicializados em init()
@@ -10,6 +11,12 @@ GLfloat fov, aspecto;
 // posições da camera no espaço
 // LIMITE esta definido em movimento.h
 float posicaoX = 0.0, posicaoY = 0.0, posicaoZ = LIMITE;
+
+// inicialização de variaveis declaradas com extern em modelo.h
+double deslocamentoVertical = 0.0;
+double keyWalkFrames[2][6];
+double anguloCoxaEsq = 30.0, anguloPanturrEsq = 0.0, anguloCoxaDir = -30.0,
+       anguloPanturrDir = 0.0;
 
 int main(int argc, char **argv) {
   glutInit(&argc, argv);

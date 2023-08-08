@@ -42,6 +42,12 @@
       2 * (FOOT_JOINT_SIZE + UP_LEG_JOINT_SIZE + LO_LEG_JOINT_SIZE)
 
 #define PI 3.141592
+#define QUADROS_ENTRE_KEYFRAMES 4
+
+extern double deslocamentoVertical;
+extern double keyWalkFrames[2][6];
+extern double anguloCoxaEsq, anguloPanturrEsq, anguloCoxaDir, anguloPanturrDir;
+extern int frameCaminhadaAtual, keyFrameCaminhadaAtual;
 
 enum lados { ESQUERDA, DIREITA };
 
@@ -52,6 +58,7 @@ void kbd(unsigned char, int, int);
 void mouseHandler(int, int, int, int);
 void criaMenu();
 void menuPrincipal(int);
+
 void quadril();
 void perna(enum lados);
 void panturrilha();
@@ -63,5 +70,9 @@ void braco();
 void antebraco();
 void bracos();
 void cabeca();
+
+double movimentacaoVertical(double, double, double, double);
+void animacaoCaminhada();
+void calculaAnimacaoCaminhada(float, float, float, float);
 
 #endif
