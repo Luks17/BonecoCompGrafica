@@ -50,3 +50,8 @@ void panturrilha();
 void pe();
 void coxa();
 void pernas();
+void torso();
+void braco();
+void antebraco();
+void bracos();
+void cabeca();

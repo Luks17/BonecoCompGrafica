@@ -6,6 +6,7 @@ void quadril() {
 
   glScalef(BASE_WIDTH, BASE_HEIGHT, TORSO);
   glColor3f(0.0, 1.0, 1.0);
+  glTranslatef(0.0, 0.0, 0.0);
   glutWireCube(1.0);
 
   glPopMatrix();
@@ -62,6 +63,8 @@ void pe() {
 
   glPopMatrix();
 
+  glPushMatrix();
+
   glTranslatef(0.0, -FOOT_HEIGHT * 0.75, FOOT_WIDTH * 0.5);
 
   glPushMatrix();
@@ -71,6 +74,7 @@ void pe() {
 
   glutWireCube(1.0);
 
+  glPopMatrix();
   glPopMatrix();
 };
 
@@ -94,10 +98,6 @@ void perna() {
 void pernas() {
   glPushMatrix();
 
-  // desenha o quadril na origem
-  glTranslatef(0.0, 0.0, 0.0);
-  quadril();
-
   // desce a altura para as pernas
   glTranslatef(0.0, -(BASE_HEIGHT), 0.0);
 
@@ -112,6 +112,105 @@ void pernas() {
   glTranslatef(-TORSO_WIDTH * 0.33, 0.0, 0.0);
   perna();
   glPopMatrix();
+
+  glPopMatrix();
+}
+
+void torso() {
+  glPushMatrix();
+
+  glColor3f(0.0, 0.0, 0.0);
+  glTranslatef(0.0, BASE_HEIGHT / 2.0 + TORSO_HEIGHT / 2.0, 0.0);
+  glScalef(TORSO_WIDTH, TORSO_HEIGHT, TORSO);
+
+  glutWireCube(1.0);
+
+  glPopMatrix();
+}
+
+void antebraco() {
+  glPushMatrix();
+
+  glTranslatef(0.0, -LO_ARM_JOINT_SIZE * 4, 0.0);
+
+  glPushMatrix();
+
+  glColor3f(0.0, 1.0, 0.0);
+  glScalef(LO_ARM_JOINT_SIZE, LO_ARM_JOINT_SIZE, LO_ARM_JOINT_SIZE);
+  glutWireSphere(1.0, 8, 8);
+
+  glPopMatrix();
+
+  glColor3f(0.5, 0.1, 0.3);
+  glTranslatef(0.0, -LO_ARM_JOINT_SIZE - LO_ARM_HEIGHT / 2, 0.0);
+
+  glScalef(LO_ARM_WIDTH, LO_ARM_HEIGHT, LO_ARM_WIDTH);
+  glutWireCube(1.0);
+
+  glPopMatrix();
+}
+
+void braco() {
+  glPushMatrix();
+
+  glTranslatef(0.0, -UP_ARM_JOINT_SIZE * 2, 0.0);
+
+  glPushMatrix();
+
+  glColor3f(0.0, 1.0, 0.0);
+  glScalef(UP_ARM_JOINT_SIZE, UP_ARM_JOINT_SIZE, UP_ARM_JOINT_SIZE);
+  glutWireSphere(1.0, 8, 8);
+
+  glPopMatrix();
+
+  glColor3f(0.5, 0.1, 0.3);
+  glTranslatef(0.0, -UP_ARM_JOINT_SIZE - UP_ARM_HEIGHT / 2, 0.0);
+
+  glScalef(UP_ARM_WIDTH, UP_ARM_HEIGHT, UP_ARM_WIDTH);
+  glutWireCube(1.0);
+
+  glPopMatrix();
+}
+
+void bracos() {
+  glPushMatrix();
+
+  glTranslatef(TORSO_WIDTH * 0.66, LO_ARM_HEIGHT, 0.0);
+  antebraco();
+
+  glTranslatef(0.0, UP_ARM_HEIGHT * 0.875 + LO_ARM_JOINT_SIZE * 2, 0.0);
+  braco();
+
+  glPopMatrix();
+
+  glPushMatrix();
+
+  glTranslatef(TORSO_WIDTH * (-0.66), LO_ARM_HEIGHT, 0.0);
+  antebraco();
+
+  glTranslatef(0.0, UP_ARM_HEIGHT * 0.875 + LO_ARM_JOINT_SIZE * 2, 0.0);
+  braco();
+
+  glPopMatrix();
+}
+
+void cabeca() {
+  glPushMatrix();
+
+  glColor3f(0.0, 1.0, 0.0);
+  glTranslatef(0.0, BASE_HEIGHT / 2.0 + TORSO_HEIGHT + HEAD_JOINT_SIZE, 0.0);
+
+  glScalef(HEAD_JOINT_SIZE, HEAD_JOINT_SIZE, HEAD_JOINT_SIZE);
+  glutWireSphere(1.0, 8, 8);
+
+  glPopMatrix();
+
+  glPushMatrix();
+
+  glColor3f(0.1, 0.7, 0.2);
+  glTranslatef(0.0, TORSO_HEIGHT + HEAD_JOINT_SIZE + HEAD_HEIGHT, 0.0);
+  glScalef(HEAD_WIDTH, HEAD_HEIGHT, HEAD_WIDTH);
+  glutWireCube(1.0);
 
   glPopMatrix();
 }

@@ -1,6 +1,6 @@
-# MinecraftCompGrafica
+# Boneco 3D para computação gráfica
 
-Projeto 3d para a nota da P2 de Computação Gráfica
+Este é um projeto 3D, feito com FreeGlut, para o trabalho equivalente à nota da P2 de Computação Gráfica. 
 
 ## Como rodar
 
@@ -17,10 +17,11 @@ $ gcc -o main -lGL -lGLU -lglut main.c && ./main
 - [x] Profundidade
 - [x] Movimentação da camera
 - [ ] Documentar código
-- [ ] Fazer parte de cima do quadril do boneco
-  - [ ] Torso
-  - [ ] Braços
-  - [ ] Cabeça
+- [ ] Rever contas que não fazem sentido
+- [x] Fazer parte de cima do quadril do boneco
+  - [x] Torso
+  - [x] Braços
+  - [x] Cabeça
 - [x] Menu para trocar animação
 - [ ] Animações
   - [ ] Corrida
