@@ -7,6 +7,8 @@
 // inicializados em init()
 GLfloat fov, aspecto;
 
+enum animacaoAtual estado;
+
 // variaveis da camera
 // posições da camera no espaço
 // LIMITE esta definido em movimento.h
@@ -28,6 +30,7 @@ int main(int argc, char **argv) {
   glutReshapeFunc(reshape);
   glutKeyboardFunc(kbd);
   glutMouseFunc(mouseHandler);
+  glutTimerFunc(100, timer, 1);
 
   init();
 
@@ -43,6 +46,13 @@ void init() {
 
   fov = 65;
   aspecto = 1;
+
+  keyWalkFrames[0][3] = anguloCoxaEsq;
+  keyWalkFrames[1][3] = anguloCoxaDir;
+  deslocamentoVertical = movimentacaoVertical(anguloCoxaEsq, anguloPanturrEsq,
+                                              anguloCoxaDir, anguloPanturrDir);
+
+  estado = NENHUM;
 }
 
 void display() {
@@ -50,13 +60,34 @@ void display() {
   glLoadIdentity();
   gluLookAt(posicaoX, posicaoY, posicaoZ, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
+  glPushMatrix();
+
+  glTranslatef(0.0, deslocamentoVertical, 0.0);
+
   quadril();
   pernas();
   torso();
   cabeca();
   bracos();
 
+  glPopMatrix();
+
   glutSwapBuffers();
+}
+
+void timer(int value) {
+  switch (estado) {
+  case CAMINHADA:
+    animacaoCaminhada();
+    break;
+  case ACENANDO:
+    break;
+  case NENHUM:
+    break;
+  }
+
+  glutPostRedisplay();
+  glutTimerFunc(16, timer, 1);
 }
 
 void kbd(unsigned char key, int x, int y) {
@@ -123,11 +154,14 @@ void menuPrincipal(int option) {
   switch (option) {
   case 0:
     printf("Opção 'Corrida' selecionada\n");
+    estado = CAMINHADA;
     break;
   case 1:
     printf("Opção 'Acenando' selecionada\n");
+    estado = ACENANDO;
     break;
   case 2:
+    estado = NENHUM;
     // TODO: desfazer transformacoes futuras aqui tb
     posicaoX = posicaoY = 0;
     posicaoZ = LIMITE;

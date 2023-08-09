@@ -42,7 +42,7 @@
       2 * (FOOT_JOINT_SIZE + UP_LEG_JOINT_SIZE + LO_LEG_JOINT_SIZE)
 
 #define PI 3.141592
-#define QUADROS_ENTRE_KEYFRAMES 4
+#define QUADROS_ENTRE_KEYFRAMES 14
 
 extern double deslocamentoVertical;
 extern double keyWalkFrames[2][6];
@@ -50,11 +50,13 @@ extern double anguloCoxaEsq, anguloPanturrEsq, anguloCoxaDir, anguloPanturrDir;
 extern int frameCaminhadaAtual, keyFrameCaminhadaAtual;
 
 enum lados { ESQUERDA, DIREITA };
+enum animacaoAtual { CAMINHADA, ACENANDO, NENHUM };
 
 void init();
 void display();
 void reshape(int, int);
 void kbd(unsigned char, int, int);
+void timer(int);
 void mouseHandler(int, int, int, int);
 void criaMenu();
 void menuPrincipal(int);
