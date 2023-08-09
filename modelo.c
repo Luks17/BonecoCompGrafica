@@ -151,7 +151,7 @@ void antebraco() {
   glPopMatrix();
 }
 
-void braco() {
+void bracoSuperior() {
   glPushMatrix();
 
   glTranslatef(0.0, -UP_ARM_JOINT_SIZE * 2, 0.0);
@@ -173,24 +173,34 @@ void braco() {
   glPopMatrix();
 }
 
+void braco(enum lados lado) {
+  glPushMatrix();
+
+  glRotatef(keyWalkFrames[lado][2], 1.0, 0.0, 0.0);
+  bracoSuperior();
+
+  glTranslatef(0.0, -UP_ARM_HEIGHT * 0.875 - LO_ARM_JOINT_SIZE * 2, 0.0);
+  antebraco();
+
+  glPopMatrix();
+}
+
 void bracos() {
   glPushMatrix();
 
-  glTranslatef(TORSO_WIDTH * 0.66, LO_ARM_HEIGHT, 0.0);
-  antebraco();
-
-  glTranslatef(0.0, UP_ARM_HEIGHT * 0.875 + LO_ARM_JOINT_SIZE * 2, 0.0);
-  braco();
+  glTranslatef(TORSO_WIDTH * 0.66,
+               UP_ARM_HEIGHT * 0.875 + LO_ARM_JOINT_SIZE * 2 + LO_ARM_HEIGHT,
+               0.0);
+  braco(DIREITA);
 
   glPopMatrix();
 
   glPushMatrix();
 
-  glTranslatef(TORSO_WIDTH * (-0.66), LO_ARM_HEIGHT, 0.0);
-  antebraco();
-
-  glTranslatef(0.0, UP_ARM_HEIGHT * 0.875 + LO_ARM_JOINT_SIZE * 2, 0.0);
-  braco();
+  glTranslatef(TORSO_WIDTH * (-0.66),
+               UP_ARM_HEIGHT * 0.875 + LO_ARM_JOINT_SIZE * 2 + LO_ARM_HEIGHT,
+               0.0);
+  braco(ESQUERDA);
 
   glPopMatrix();
 }

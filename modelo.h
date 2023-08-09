@@ -68,13 +68,14 @@ void pe();
 void coxa();
 void pernas();
 void torso();
-void braco();
+void bracoSuperior();
+void braco(enum lados);
 void antebraco();
 void bracos();
 void cabeca();
 
 double movimentacaoVertical(double, double, double, double);
 void animacaoCaminhada();
-void calculaAnimacaoCaminhada(float, float, float, float);
+void calculaAnimacaoCaminhada(float, float, float, float, float, float);
 
 #endif

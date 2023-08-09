@@ -51,6 +51,8 @@ void init() {
   keyWalkFrames[1][3] = anguloCoxaDir;
   keyWalkFrames[0][4] = anguloPanturrEsq;
   keyWalkFrames[1][4] = anguloPanturrDir;
+  keyWalkFrames[0][2] = 0;
+  keyWalkFrames[1][2] = 0;
   deslocamentoVertical = movimentacaoVertical(anguloCoxaEsq, anguloPanturrEsq,
                                               anguloCoxaDir, anguloPanturrDir);
 

@@ -48,13 +48,21 @@ double movimentacaoVertical(double angulo_coxa_esq, double angulo_panturr_esq,
 }
 
 void calculaAnimacaoCaminhada(float diffCoxaEsq, float diffCoxaDir,
-                              float diffPanturrEsq, float diffPanturrDir) {
-  float somaCoxaEsq, somaCoxaDir, somaPanturrEsq, somaPanturrDir;
+                              float diffPanturrEsq, float diffPanturrDir,
+                              float diffBracoEsq, float diffBracoDir) {
+  float somaCoxaEsq, somaCoxaDir, somaPanturrEsq, somaPanturrDir, somaBracoEsq,
+      somaBracoDir;
+
+  somaBracoEsq = diffBracoEsq / QUADROS_ENTRE_KEYFRAMES;
+  somaBracoDir = diffBracoDir / QUADROS_ENTRE_KEYFRAMES;
 
   somaCoxaEsq = diffCoxaEsq / QUADROS_ENTRE_KEYFRAMES;
   somaCoxaDir = diffCoxaDir / QUADROS_ENTRE_KEYFRAMES;
   somaPanturrEsq = diffPanturrEsq / QUADROS_ENTRE_KEYFRAMES;
   somaPanturrDir = diffPanturrDir / QUADROS_ENTRE_KEYFRAMES;
+
+  keyWalkFrames[0][2] += somaBracoEsq;
+  keyWalkFrames[1][2] += somaBracoDir;
 
   keyWalkFrames[0][3] += somaCoxaDir;
   keyWalkFrames[1][3] += somaCoxaEsq;
@@ -82,7 +90,7 @@ void animacaoCaminhada() {
   // quadros entre keyFrame, com isso é possível ter movimentos
   // intermediários entre keyframes
   float diferencaCoxaEsq, diferencaCoxaDir, diferencaPanturrEsq,
-      diferencaPanturrDir;
+      diferencaPanturrDir, diferencaBracoEsq, diferencaBracoDir;
 
   switch (keyFrameCaminhadaAtual) {
   case 0:
@@ -91,8 +99,12 @@ void animacaoCaminhada() {
     diferencaPanturrEsq = 15;
     diferencaPanturrDir = 5;
 
+    diferencaBracoEsq = 4;
+    diferencaBracoDir = -4;
+
     calculaAnimacaoCaminhada(diferencaCoxaEsq, diferencaCoxaDir,
-                             diferencaPanturrEsq, diferencaPanturrDir);
+                             diferencaPanturrEsq, diferencaPanturrDir,
+                             diferencaBracoEsq, diferencaBracoDir);
     break;
   case 1:
     diferencaCoxaEsq = 20;
@@ -100,8 +112,12 @@ void animacaoCaminhada() {
     diferencaPanturrEsq = -15;
     diferencaPanturrDir = 85;
 
+    diferencaBracoEsq = 4;
+    diferencaBracoDir = -4;
+
     calculaAnimacaoCaminhada(diferencaCoxaEsq, diferencaCoxaDir,
-                             diferencaPanturrEsq, diferencaPanturrDir);
+                             diferencaPanturrEsq, diferencaPanturrDir,
+                             diferencaBracoEsq, diferencaBracoDir);
     break;
   case 2:
     diferencaCoxaEsq = 5;
@@ -109,8 +125,12 @@ void animacaoCaminhada() {
     diferencaPanturrEsq = 10;
     diferencaPanturrDir = -40;
 
+    diferencaBracoEsq = -4;
+    diferencaBracoDir = 4;
+
     calculaAnimacaoCaminhada(diferencaCoxaEsq, diferencaCoxaDir,
-                             diferencaPanturrEsq, diferencaPanturrDir);
+                             diferencaPanturrEsq, diferencaPanturrDir,
+                             diferencaBracoEsq, diferencaBracoDir);
     break;
   case 3:
     diferencaCoxaEsq = 20;
@@ -118,8 +138,12 @@ void animacaoCaminhada() {
     diferencaPanturrEsq = -10;
     diferencaPanturrDir = -50;
 
+    diferencaBracoEsq = -4;
+    diferencaBracoDir = 4;
+
     calculaAnimacaoCaminhada(diferencaCoxaEsq, diferencaCoxaDir,
-                             diferencaPanturrEsq, diferencaPanturrDir);
+                             diferencaPanturrEsq, diferencaPanturrDir,
+                             diferencaBracoEsq, diferencaBracoDir);
     break;
   case 4:
     diferencaCoxaEsq = 5;
@@ -127,8 +151,12 @@ void animacaoCaminhada() {
     diferencaPanturrEsq = 5;
     diferencaPanturrDir = 15;
 
+    diferencaBracoEsq = -4;
+    diferencaBracoDir = 4;
+
     calculaAnimacaoCaminhada(diferencaCoxaEsq, diferencaCoxaDir,
-                             diferencaPanturrEsq, diferencaPanturrDir);
+                             diferencaPanturrEsq, diferencaPanturrDir,
+                             diferencaBracoEsq, diferencaBracoDir);
     break;
   case 5:
     diferencaCoxaEsq = -65;
@@ -136,8 +164,12 @@ void animacaoCaminhada() {
     diferencaPanturrEsq = 85;
     diferencaPanturrDir = -15;
 
+    diferencaBracoEsq = -4;
+    diferencaBracoDir = 4;
+
     calculaAnimacaoCaminhada(diferencaCoxaEsq, diferencaCoxaDir,
-                             diferencaPanturrEsq, diferencaPanturrDir);
+                             diferencaPanturrEsq, diferencaPanturrDir,
+                             diferencaBracoEsq, diferencaBracoDir);
     break;
   case 6:
     diferencaCoxaEsq = -25;
@@ -145,8 +177,12 @@ void animacaoCaminhada() {
     diferencaPanturrEsq = -40;
     diferencaPanturrDir = 10;
 
+    diferencaBracoEsq = 4;
+    diferencaBracoDir = -4;
+
     calculaAnimacaoCaminhada(diferencaCoxaEsq, diferencaCoxaDir,
-                             diferencaPanturrEsq, diferencaPanturrDir);
+                             diferencaPanturrEsq, diferencaPanturrDir,
+                             diferencaBracoEsq, diferencaBracoDir);
     break;
   case 7:
     diferencaCoxaEsq = 25;
@@ -154,8 +190,12 @@ void animacaoCaminhada() {
     diferencaPanturrEsq = -50;
     diferencaPanturrDir = -10;
 
+    diferencaBracoEsq = 4;
+    diferencaBracoDir = -4;
+
     calculaAnimacaoCaminhada(diferencaCoxaEsq, diferencaCoxaDir,
-                             diferencaPanturrEsq, diferencaPanturrDir);
+                             diferencaPanturrEsq, diferencaPanturrDir,
+                             diferencaBracoEsq, diferencaBracoDir);
     break;
   }
 

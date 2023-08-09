@@ -24,5 +24,5 @@ $ gcc -o main -lGL -lGLU -lglut -lm main.c && ./main
   - [x] Cabeça
 - [x] Menu para trocar animação
 - [ ] Animações
-  - [ ] Corrida
+  - [x] Caminhada
   - [ ] Tchauzinho
