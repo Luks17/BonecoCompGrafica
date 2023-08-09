@@ -49,6 +49,8 @@ void init() {
 
   keyWalkFrames[0][3] = anguloCoxaEsq;
   keyWalkFrames[1][3] = anguloCoxaDir;
+  keyWalkFrames[0][4] = anguloPanturrEsq;
+  keyWalkFrames[1][4] = anguloPanturrDir;
   deslocamentoVertical = movimentacaoVertical(anguloCoxaEsq, anguloPanturrEsq,
                                               anguloCoxaDir, anguloPanturrDir);
 
@@ -143,9 +145,10 @@ void mouseHandler(int btn, int state, int x, int y) {
 
 void criaMenu() {
   int menu = glutCreateMenu(menuPrincipal);
-  glutAddMenuEntry("Corrida", 0);
+  glutAddMenuEntry("Caminhada", 0);
   glutAddMenuEntry("Acenando", 1);
-  glutAddMenuEntry("Voltar a posicao inicial", 2);
+  glutAddMenuEntry("Pausar", 2);
+  glutAddMenuEntry("Voltar a posicao inicial", 3);
 
   glutAttachMenu(GLUT_RIGHT_BUTTON);
 };
@@ -153,7 +156,7 @@ void criaMenu() {
 void menuPrincipal(int option) {
   switch (option) {
   case 0:
-    printf("Opção 'Corrida' selecionada\n");
+    printf("Opção 'Caminhada' selecionada\n");
     estado = CAMINHADA;
     break;
   case 1:
@@ -162,7 +165,12 @@ void menuPrincipal(int option) {
     break;
   case 2:
     estado = NENHUM;
-    // TODO: desfazer transformacoes futuras aqui tb
+    break;
+  case 3:
+    estado = NENHUM;
+    // TODO: desfazer transformacoes aqui
+
+    // retorna camera a posicao inicial
     posicaoX = posicaoY = 0;
     posicaoZ = LIMITE;
     coordenadaEstaAumentando[0] = coordenadaEstaAumentando[1] =

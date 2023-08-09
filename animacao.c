@@ -81,8 +81,8 @@ void animacaoCaminhada() {
   // calculadas pegando as variaveis de diferenca e dividindo pelo total de
   // quadros entre keyFrame, com isso é possível ter movimentos
   // intermediários entre keyframes
-  float diferencaCoxaEsq, diferencaCoxaDir, somaCoxaEsq, somaCoxaDir,
-      diferencaPanturrEsq, diferencaPanturrDir, somaPanturrEsq, somaPanturrDir;
+  float diferencaCoxaEsq, diferencaCoxaDir, diferencaPanturrEsq,
+      diferencaPanturrDir;
 
   switch (keyFrameCaminhadaAtual) {
   case 0:
