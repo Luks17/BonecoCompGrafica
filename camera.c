@@ -7,8 +7,6 @@
 // coordenadaEstaAumentando[2] = z
 bool coordenadaEstaAumentando[] = {true, true, true};
 
-char coordenadas[] = {'x', 'y', 'z'};
-
 void ajustaCoordenada(float *valor, enum coordenada coord, bool tentaAumentar) {
   short multiplicador = tentaAumentar ? 1 : -1;
 
@@ -28,14 +26,4 @@ void ajustaCoordenada(float *valor, enum coordenada coord, bool tentaAumentar) {
   else {
     *valor -= MOVIMENTO * multiplicador;
   }
-
-  // DEBUG
-  //
-  // if (coord != coordz) {
-  //   printf("%c = %f - ", coordenadas[coord], *valor);
-  //   if (coordenadaEstaAumentando[coord])
-  //     printf("Esta Aumentando\n");
-  //   else
-  //     printf("Nao esta Aumentando\n");
-  // }
 }

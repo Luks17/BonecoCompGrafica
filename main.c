@@ -1,15 +1,24 @@
 
 #include "camera.c"
 #include "modelo.c"
+#include "modelo.h"
 
 // variaveis de perspectiva
 // inicializados em init()
 GLfloat fov, aspecto;
 
+enum animacaoAtual estado;
+
 // variaveis da camera
 // posições da camera no espaço
 // LIMITE esta definido em movimento.h
 float posicaoX = 0.0, posicaoY = 0.0, posicaoZ = LIMITE;
+
+// inicialização de variaveis declaradas com extern em modelo.h
+double deslocamentoVertical = 0.0;
+double keyWalkFrames[2][6];
+double anguloCoxaEsq = 30.0, anguloPanturrEsq = 0.0, anguloCoxaDir = -30.0,
+       anguloPanturrDir = 0.0;
 
 int main(int argc, char **argv) {
   glutInit(&argc, argv);
@@ -21,6 +30,7 @@ int main(int argc, char **argv) {
   glutReshapeFunc(reshape);
   glutKeyboardFunc(kbd);
   glutMouseFunc(mouseHandler);
+  glutTimerFunc(100, timer, 1);
 
   init();
 
@@ -36,6 +46,17 @@ void init() {
 
   fov = 65;
   aspecto = 1;
+
+  keyWalkFrames[0][3] = anguloCoxaEsq;
+  keyWalkFrames[1][3] = anguloCoxaDir;
+  keyWalkFrames[0][4] = anguloPanturrEsq;
+  keyWalkFrames[1][4] = anguloPanturrDir;
+  keyWalkFrames[0][2] = 0;
+  keyWalkFrames[1][2] = 0;
+  deslocamentoVertical = movimentacaoVertical(anguloCoxaEsq, anguloPanturrEsq,
+                                              anguloCoxaDir, anguloPanturrDir);
+
+  estado = NENHUM;
 }
 
 void display() {
@@ -43,13 +64,34 @@ void display() {
   glLoadIdentity();
   gluLookAt(posicaoX, posicaoY, posicaoZ, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
+  glPushMatrix();
+
+  glTranslatef(0.0, deslocamentoVertical, 0.0);
+
   quadril();
   pernas();
   torso();
   cabeca();
   bracos();
 
+  glPopMatrix();
+
   glutSwapBuffers();
+}
+
+void timer(int value) {
+  switch (estado) {
+  case CAMINHADA:
+    animacaoCaminhada();
+    break;
+  case ACENANDO:
+    break;
+  case NENHUM:
+    break;
+  }
+
+  glutPostRedisplay();
+  glutTimerFunc(16, timer, 1);
 }
 
 void kbd(unsigned char key, int x, int y) {
@@ -105,9 +147,10 @@ void mouseHandler(int btn, int state, int x, int y) {
 
 void criaMenu() {
   int menu = glutCreateMenu(menuPrincipal);
-  glutAddMenuEntry("Corrida", 0);
+  glutAddMenuEntry("Caminhada", 0);
   glutAddMenuEntry("Acenando", 1);
-  glutAddMenuEntry("Voltar a posicao inicial", 2);
+  glutAddMenuEntry("Pausar", 2);
+  glutAddMenuEntry("Voltar a posicao inicial", 3);
 
   glutAttachMenu(GLUT_RIGHT_BUTTON);
 };
@@ -115,13 +158,21 @@ void criaMenu() {
 void menuPrincipal(int option) {
   switch (option) {
   case 0:
-    printf("Opção 'Corrida' selecionada\n");
+    printf("Opção 'Caminhada' selecionada\n");
+    estado = CAMINHADA;
     break;
   case 1:
     printf("Opção 'Acenando' selecionada\n");
+    estado = ACENANDO;
     break;
   case 2:
-    // TODO: desfazer transformacoes futuras aqui tb
+    estado = NENHUM;
+    break;
+  case 3:
+    estado = NENHUM;
+    // TODO: desfazer transformacoes aqui
+
+    // retorna camera a posicao inicial
     posicaoX = posicaoY = 0;
     posicaoZ = LIMITE;
     coordenadaEstaAumentando[0] = coordenadaEstaAumentando[1] =

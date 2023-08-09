@@ -1,13 +1,13 @@
 # Boneco 3D para computação gráfica
 
-Este é um projeto 3D, feito com FreeGlut, para o trabalho equivalente à nota da P2 de Computação Gráfica. 
+Este é um projeto 3D, feito com FreeGlut, para o trabalho equivalente à nota da P2 de Computação Gráfica.
 
 ## Como rodar
 
 Este projeto requer GCC e FreeGlut instalado para funcionar
 
 ```bash
-$ gcc -o main -lGL -lGLU -lglut main.c && ./main
+$ gcc -o main -lGL -lGLU -lglut -lm main.c && ./main
 ```
 
 ## Roadmap
@@ -24,5 +24,5 @@ $ gcc -o main -lGL -lGLU -lglut main.c && ./main
   - [x] Cabeça
 - [x] Menu para trocar animação
 - [ ] Animações
-  - [ ] Corrida
+  - [x] Caminhada
   - [ ] Tchauzinho

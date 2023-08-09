@@ -1,7 +1,11 @@
 
+#ifndef MODELO_H
+#define MODELO_H
+
 #include <GL/freeglut_std.h>
 #include <GL/gl.h>
 #include <GL/glut.h>
+#include <math.h>
 #include <stdio.h>
 
 // A altura do torso define as dimensões de todos os outros elementos
@@ -37,21 +41,41 @@
   UP_LEG_HEIGHT + LO_LEG_HEIGHT + FOOT_HEIGHT +                                \
       2 * (FOOT_JOINT_SIZE + UP_LEG_JOINT_SIZE + LO_LEG_JOINT_SIZE)
 
+#define PI 3.141592
+#define QUADROS_ENTRE_KEYFRAMES 14
+
+extern double deslocamentoVertical;
+extern double keyWalkFrames[2][6];
+extern double anguloCoxaEsq, anguloPanturrEsq, anguloCoxaDir, anguloPanturrDir;
+extern int frameCaminhadaAtual, keyFrameCaminhadaAtual;
+
+enum lados { ESQUERDA, DIREITA };
+enum animacaoAtual { CAMINHADA, ACENANDO, NENHUM };
+
 void init();
 void display();
 void reshape(int, int);
 void kbd(unsigned char, int, int);
+void timer(int);
 void mouseHandler(int, int, int, int);
 void criaMenu();
 void menuPrincipal(int);
+
 void quadril();
-void perna();
+void perna(enum lados);
 void panturrilha();
 void pe();
 void coxa();
 void pernas();
 void torso();
-void braco();
+void bracoSuperior();
+void braco(enum lados);
 void antebraco();
 void bracos();
 void cabeca();
+
+double movimentacaoVertical(double, double, double, double);
+void animacaoCaminhada();
+void calculaAnimacaoCaminhada(float, float, float, float, float, float);
+
+#endif
