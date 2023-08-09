@@ -47,48 +47,15 @@ double movimentacaoVertical(double angulo_coxa_esq, double angulo_panturr_esq,
                                                    : (-mov_perna_direita);
 }
 
-void calculaAnimacaoCaminhada(float diffCoxaEsq, float diffCoxaDir,
-                              float diffPanturrEsq, float diffPanturrDir,
-                              float diffBracoEsq, float diffBracoDir) {
-  float somaCoxaEsq, somaCoxaDir, somaPanturrEsq, somaPanturrDir, somaBracoEsq,
-      somaBracoDir;
-
-  somaBracoEsq = diffBracoEsq / QUADROS_ENTRE_KEYFRAMES;
-  somaBracoDir = diffBracoDir / QUADROS_ENTRE_KEYFRAMES;
-
-  somaCoxaEsq = diffCoxaEsq / QUADROS_ENTRE_KEYFRAMES;
-  somaCoxaDir = diffCoxaDir / QUADROS_ENTRE_KEYFRAMES;
-  somaPanturrEsq = diffPanturrEsq / QUADROS_ENTRE_KEYFRAMES;
-  somaPanturrDir = diffPanturrDir / QUADROS_ENTRE_KEYFRAMES;
-
-  keyWalkFrames[0][2] += somaBracoEsq;
-  keyWalkFrames[1][2] += somaBracoDir;
-
-  keyWalkFrames[0][3] += somaCoxaDir;
-  keyWalkFrames[1][3] += somaCoxaEsq;
-  keyWalkFrames[0][4] += somaPanturrDir;
-  keyWalkFrames[1][4] += somaPanturrEsq;
-
-  anguloCoxaEsq -= somaCoxaEsq;
-  anguloPanturrEsq -= somaPanturrEsq;
-  anguloCoxaDir -= somaCoxaDir;
-  anguloPanturrDir -= somaPanturrDir;
-  deslocamentoVertical = movimentacaoVertical(anguloCoxaEsq, anguloPanturrEsq,
-                                              anguloCoxaDir, anguloPanturrDir);
-  frameCaminhadaAtual--;
-  if (frameCaminhadaAtual == 0) {
-    keyFrameCaminhadaAtual = (keyFrameCaminhadaAtual + 1) % 8;
-    frameCaminhadaAtual = QUADROS_ENTRE_KEYFRAMES;
-  }
-}
-
 void animacaoCaminhada() {
   // as variaveis de diferenca são definidas em cada frame baseado no livro
-  // de animação "Moving Pictures". No total são 8, por isso o número de
-  // keyFrames é 8 também (switch case de 0 a 7); as variaveis de soma são
+  // de animação "Moving Pictures" (menos as animacoes dos bracos, elas foram
+  // feitas pelo Lucas mesmo). No total são 8, por isso o número de keyFrames é
+  // 8 também (switch case de 0 a 7);
+  // as variaveis de soma (que estao na funcao calculaAnimacaoCaminhada) são
   // calculadas pegando as variaveis de diferenca e dividindo pelo total de
-  // quadros entre keyFrame, com isso é possível ter movimentos
-  // intermediários entre keyframes
+  // quadros entre keyFrame, com isso é possível ter movimentos intermediários
+  // entre keyframes
   float diferencaCoxaEsq, diferencaCoxaDir, diferencaPanturrEsq,
       diferencaPanturrDir, diferencaBracoEsq, diferencaBracoDir;
 
@@ -200,4 +167,39 @@ void animacaoCaminhada() {
   }
 
   glutPostRedisplay();
+}
+
+void calculaAnimacaoCaminhada(float diffCoxaEsq, float diffCoxaDir,
+                              float diffPanturrEsq, float diffPanturrDir,
+                              float diffBracoEsq, float diffBracoDir) {
+  float somaCoxaEsq, somaCoxaDir, somaPanturrEsq, somaPanturrDir, somaBracoEsq,
+      somaBracoDir;
+
+  somaBracoEsq = diffBracoEsq / QUADROS_ENTRE_KEYFRAMES;
+  somaBracoDir = diffBracoDir / QUADROS_ENTRE_KEYFRAMES;
+
+  somaCoxaEsq = diffCoxaEsq / QUADROS_ENTRE_KEYFRAMES;
+  somaCoxaDir = diffCoxaDir / QUADROS_ENTRE_KEYFRAMES;
+  somaPanturrEsq = diffPanturrEsq / QUADROS_ENTRE_KEYFRAMES;
+  somaPanturrDir = diffPanturrDir / QUADROS_ENTRE_KEYFRAMES;
+
+  keyWalkFrames[0][2] += somaBracoEsq;
+  keyWalkFrames[1][2] += somaBracoDir;
+
+  keyWalkFrames[0][3] += somaCoxaDir;
+  keyWalkFrames[1][3] += somaCoxaEsq;
+  keyWalkFrames[0][4] += somaPanturrDir;
+  keyWalkFrames[1][4] += somaPanturrEsq;
+
+  anguloCoxaEsq -= somaCoxaEsq;
+  anguloPanturrEsq -= somaPanturrEsq;
+  anguloCoxaDir -= somaCoxaDir;
+  anguloPanturrDir -= somaPanturrDir;
+  deslocamentoVertical = movimentacaoVertical(anguloCoxaEsq, anguloPanturrEsq,
+                                              anguloCoxaDir, anguloPanturrDir);
+  frameCaminhadaAtual--;
+  if (frameCaminhadaAtual == 0) {
+    keyFrameCaminhadaAtual = (keyFrameCaminhadaAtual + 1) % 8;
+    frameCaminhadaAtual = QUADROS_ENTRE_KEYFRAMES;
+  }
 }

@@ -52,6 +52,9 @@ extern int frameCaminhadaAtual, keyFrameCaminhadaAtual;
 enum lados { ESQUERDA, DIREITA };
 enum animacaoAtual { CAMINHADA, ACENANDO, NENHUM };
 
+extern enum animacaoAtual estado;
+extern bool animacaoEstaPausada;
+
 void init();
 void display();
 void reshape(int, int);

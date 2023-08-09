@@ -82,15 +82,18 @@ void pe() {
 void perna(enum lados lado) {
   glPushMatrix();
 
-  glRotatef(keyWalkFrames[lado][3], 1.0, 0.0, 0.0);
+  if (estado == CAMINHADA)
+    glRotatef(keyWalkFrames[lado][3], 1.0, 0.0, 0.0);
   coxa();
   glTranslatef(0.0, -UP_LEG_HEIGHT * 0.75, 0.0);
-  glRotatef(keyWalkFrames[lado][4], 1.0, 0.0, 0.0);
 
+  if (estado == CAMINHADA)
+    glRotatef(keyWalkFrames[lado][4], 1.0, 0.0, 0.0);
   panturrilha();
   glTranslatef(0.0, -LO_LEG_HEIGHT * 0.625, 0.0);
-  glRotatef(keyWalkFrames[lado][5], 1.0, 0.0, 0.0);
 
+  if (estado == CAMINHADA)
+    glRotatef(keyWalkFrames[lado][5], 1.0, 0.0, 0.0);
   pe();
 
   glPopMatrix();
@@ -176,7 +179,8 @@ void bracoSuperior() {
 void braco(enum lados lado) {
   glPushMatrix();
 
-  glRotatef(keyWalkFrames[lado][2], 1.0, 0.0, 0.0);
+  if (estado == CAMINHADA)
+    glRotatef(keyWalkFrames[lado][2], 1.0, 0.0, 0.0);
   bracoSuperior();
 
   glTranslatef(0.0, -UP_ARM_HEIGHT * 0.875 - LO_ARM_JOINT_SIZE * 2, 0.0);

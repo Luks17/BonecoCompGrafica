@@ -8,6 +8,7 @@
 GLfloat fov, aspecto;
 
 enum animacaoAtual estado;
+bool animacaoEstaPausada = false;
 
 // variaveis da camera
 // posições da camera no espaço
@@ -80,17 +81,20 @@ void display() {
 }
 
 void timer(int value) {
-  switch (estado) {
-  case CAMINHADA:
-    animacaoCaminhada();
-    break;
-  case ACENANDO:
-    break;
-  case NENHUM:
-    break;
+  if (!animacaoEstaPausada) {
+
+    switch (estado) {
+    case CAMINHADA:
+      animacaoCaminhada();
+      break;
+    case ACENANDO:
+      break;
+    default:
+      break;
+    }
+    glutPostRedisplay();
   }
 
-  glutPostRedisplay();
   glutTimerFunc(16, timer, 1);
 }
 
@@ -156,6 +160,8 @@ void criaMenu() {
 };
 
 void menuPrincipal(int option) {
+  animacaoEstaPausada = false;
+
   switch (option) {
   case 0:
     printf("Opção 'Caminhada' selecionada\n");
@@ -166,11 +172,10 @@ void menuPrincipal(int option) {
     estado = ACENANDO;
     break;
   case 2:
-    estado = NENHUM;
+    animacaoEstaPausada = true;
     break;
   case 3:
     estado = NENHUM;
-    // TODO: desfazer transformacoes aqui
 
     // retorna camera a posicao inicial
     posicaoX = posicaoY = 0;
