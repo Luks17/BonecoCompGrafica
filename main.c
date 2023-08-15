@@ -1,25 +1,35 @@
 
+#include "animacao.c"
 #include "camera.c"
 #include "modelo.c"
-#include "modelo.h"
+
+// Alunos: Eduardo Gimenes, Isadora Menezes e Lucas Ortiz
+
+// Teclas para movimentar a câmera: A, S, D, W
+// Teclas para movimentar os membros selecionados: J, K, L, I
 
 // variaveis de perspectiva
 // inicializados em init()
 GLfloat fov, aspecto;
 
-enum animacaoAtual estado;
-bool animacaoEstaPausada = false;
+enum estadoAtual estado;
+_Bool animacaoEstaPausada = false;
 
 // variaveis da camera
-// posiÃ§Ãµes da camera no espaÃ§o
+// posições da camera no espaço
 // LIMITE esta definido em movimento.h
 float posicaoX = 0.0, posicaoY = 0.0, posicaoZ = LIMITE;
 
-// inicializaÃ§Ã£o de variaveis declaradas com extern em modelo.h
+// inicialização de variaveis declaradas com extern em modelo.h
 double deslocamentoVertical = 0.0;
 double keyWalkFrames[2][6];
 double anguloCoxaEsq = 30.0, anguloPanturrEsq = 0.0, anguloCoxaDir = -30.0,
        anguloPanturrDir = 0.0;
+
+double anguloMovimento;
+double movimentoEixoX;
+double movimentoEixoY;
+double movimentoEixoZ;
 
 int main(int argc, char **argv) {
   glutInit(&argc, argv);
@@ -87,8 +97,6 @@ void timer(int value) {
     case CAMINHADA:
       animacaoCaminhada();
       break;
-    case ACENANDO:
-      break;
     default:
       break;
     }
@@ -117,6 +125,18 @@ void kbd(unsigned char key, int x, int y) {
     ajustaCoordenada(&posicaoZ, coordz, true);
     ajustaCoordenada(&posicaoX, coordx, true);
     break;
+  case 'i':
+    gesticulacao(FRENTE);
+    break;
+  case 'j':
+    gesticulacao(LADO_ESQUERDO);
+    break;
+  case 'l':
+    gesticulacao(LADO_DIREITO);
+    break;
+  case 'k':
+    gesticulacao(TRAS);
+    break;
   }
 
   glutPostRedisplay();
@@ -131,8 +151,8 @@ void reshape(int w, int h) {
 
   // fov = field of view
   // aspecto deve ser corrigido dependendo do w e h da janela,
-  // znear Ã© o corte mais prÃ³ximo da camera e
-  // zfar Ã© o corte mais longe da camera
+  // znear é o corte mais próximo da camera e
+  // zfar é o corte mais longe da camera
   // gluPerspective deve ser sempre modificado no GL_PROJECTION
   gluPerspective(fov, aspecto, 1.0, 40.0);
 
@@ -150,38 +170,104 @@ void mouseHandler(int btn, int state, int x, int y) {
 }
 
 void criaMenu() {
+  int subMenu = glutCreateMenu(menuSecundario);
+  glutAddMenuEntry("Perna esquerda", 0);
+  glutAddMenuEntry("Perna direita", 1);
+  glutAddMenuEntry("Braço esquerdo", 2);
+  glutAddMenuEntry("Braço direito", 3);
+  glutAddMenuEntry("Cabeça", 4);
+  glutAddMenuEntry("Antebraço esquerdo", 5);
+  glutAddMenuEntry("Antebraço direito", 6);
+  glutAddMenuEntry("Panturrilha esquerda", 7);
+  glutAddMenuEntry("Panturrilha direita", 8);
+
   int menu = glutCreateMenu(menuPrincipal);
   glutAddMenuEntry("Caminhada", 0);
-  glutAddMenuEntry("Acenando", 1);
-  glutAddMenuEntry("Pausar", 2);
-  glutAddMenuEntry("Voltar a posicao inicial", 3);
+  glutAddMenuEntry("Pausar", 1);
+  glutAddMenuEntry("Voltar a posição inicial", 2);
+  glutAddSubMenu("Gesticulação", subMenu);
 
   glutAttachMenu(GLUT_RIGHT_BUTTON);
 };
+
+void estadoInicial() {
+  estado = NENHUM;
+
+  // retorna camera a posicao inicial
+  posicaoX = posicaoY = 0;
+  posicaoZ = LIMITE;
+  coordenadaEstaAumentando[0] = coordenadaEstaAumentando[1] =
+      coordenadaEstaAumentando[2] = true;
+}
+
+void zerarMovimento() {
+  anguloMovimento = 0.0;
+  movimentoEixoX = 0.0;
+  movimentoEixoY = 0.0;
+  movimentoEixoZ = 0.0;
+}
 
 void menuPrincipal(int option) {
   animacaoEstaPausada = false;
 
   switch (option) {
   case 0:
-    printf("OpÃ§Ã£o 'Caminhada' selecionada\n");
+    printf("Opção 'Caminhada' selecionada\n");
     estado = CAMINHADA;
     break;
   case 1:
-    printf("OpÃ§Ã£o 'Acenando' selecionada\n");
-    estado = ACENANDO;
-    break;
-  case 2:
+    printf("Opção 'Pausar' selecionada\n");
     animacaoEstaPausada = true;
     break;
-  case 3:
-    estado = NENHUM;
+  case 2:
+    printf("Opção 'Voltar a posição inicial' selecionada\n");
+    estadoInicial();
+    break;
+  }
 
-    // retorna camera a posicao inicial
-    posicaoX = posicaoY = 0;
-    posicaoZ = LIMITE;
-    coordenadaEstaAumentando[0] = coordenadaEstaAumentando[1] =
-        coordenadaEstaAumentando[2] = true;
+  glutPostRedisplay();
+}
+
+void menuSecundario(int option) {
+  estadoInicial();
+  zerarMovimento();
+
+  switch (option) {
+  case 0:
+    printf("Opção 'Perna esquerda' selecionada\n");
+    estado = GEST_PERNA_ESQ;
+    break;
+  case 1:
+    printf("Opção 'Perna direita' selecionada\n");
+    estado = GEST_PERNA_DIR;
+    break;
+  case 2:
+    printf("Opção 'Braço esquerdo' selecionada\n");
+    estado = GEST_BRACO_ESQ;
+    break;
+  case 3:
+    printf("Opção 'Braço direito' selecionada\n");
+    estado = GEST_BRACO_DIR;
+    break;
+  case 4:
+    printf("Opção 'Cabeça' selecionada\n");
+    estado = GEST_CABECA;
+    break;
+  case 5:
+    printf("Opção 'Antebraço esquerdo' selecionada\n");
+    estado = GEST_ANTEBRACO_ESQ;
+    break;
+  case 6:
+    printf("Opção 'Antebraço direito' selecionada\n");
+    estado = GEST_ANTEBRACO_DIR;
+    break;
+  case 7:
+    printf("Opção 'Panturrilha esquerda' selecionada\n");
+    estado = GEST_PANTURRILHA_ESQ;
+    break;
+  case 8:
+    printf("Opção 'Panturrilha direita' selecionada\n");
+    estado = GEST_PANTURRILHA_DIR;
     break;
   }
 

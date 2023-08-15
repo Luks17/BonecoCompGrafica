@@ -8,7 +8,7 @@
 #include <math.h>
 #include <stdio.h>
 
-// A altura do torso define as dimens√µes de todos os outros elementos
+// A altura do torso define as dimensıes de todos os outros elementos
 #define TORSO_HEIGHT 0.8
 #define TORSO_WIDTH TORSO_HEIGHT * 0.75
 #define TORSO TORSO_WIDTH / 3.0
@@ -50,10 +50,19 @@ extern double anguloCoxaEsq, anguloPanturrEsq, anguloCoxaDir, anguloPanturrDir;
 extern int frameCaminhadaAtual, keyFrameCaminhadaAtual;
 
 enum lados { ESQUERDA, DIREITA };
-enum animacaoAtual { CAMINHADA, ACENANDO, NENHUM };
+enum estadoAtual { CAMINHADA, GEST_PERNA_ESQ, GEST_PERNA_DIR,
+       GEST_BRACO_ESQ, GEST_BRACO_DIR, GEST_CABECA,
+       GEST_ANTEBRACO_ESQ, GEST_ANTEBRACO_DIR,
+       GEST_PANTURRILHA_ESQ, GEST_PANTURRILHA_DIR, NENHUM };
 
-extern enum animacaoAtual estado;
-extern bool animacaoEstaPausada;
+extern enum estadoAtual estado;
+extern _Bool animacaoEstaPausada;
+
+enum sentidoMovimento { FRENTE, TRAS, LADO_ESQUERDO, LADO_DIREITO };
+extern double anguloMovimento;
+extern double movimentoEixoX;
+extern double movimentoEixoY;
+extern double movimentoEixoZ;
 
 void init();
 void display();
@@ -62,23 +71,26 @@ void kbd(unsigned char, int, int);
 void timer(int);
 void mouseHandler(int, int, int, int);
 void criaMenu();
+void estadoInicial();
 void menuPrincipal(int);
+void menuSecundario(int);
 
 void quadril();
 void perna(enum lados);
-void panturrilha();
-void pe();
-void coxa();
+void panturrilha(enum lados);
+void pe(enum lados);
+void coxa(enum lados);
 void pernas();
 void torso();
-void bracoSuperior();
+void bracoSuperior(enum lados);
 void braco(enum lados);
-void antebraco();
+void antebraco(enum lados);
 void bracos();
 void cabeca();
 
 double movimentacaoVertical(double, double, double, double);
 void animacaoCaminhada();
 void calculaAnimacaoCaminhada(float, float, float, float, float, float);
+void gesticulacao(enum sentidoMovimento);
 
 #endif

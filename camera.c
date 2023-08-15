@@ -5,9 +5,9 @@
 // coordenadaEstaAumentando[0] = x
 // coordenadaEstaAumentando[1] = y
 // coordenadaEstaAumentando[2] = z
-bool coordenadaEstaAumentando[] = {true, true, true};
+_Bool coordenadaEstaAumentando[] = {true, true, true};
 
-void ajustaCoordenada(float *valor, enum coordenada coord, bool tentaAumentar) {
+void ajustaCoordenada(float *valor, enum coordenada coord, _Bool tentaAumentar) {
   short multiplicador = tentaAumentar ? 1 : -1;
 
   // se coordenada estiver aumentando e chegar no limite, ela vai passar a

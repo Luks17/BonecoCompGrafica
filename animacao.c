@@ -1,12 +1,17 @@
 
 #include "modelo.h"
 
-// quando o frameCaminhadaAtual chega a 0, keyFrameCaminhadaAtual √© incrementado
-// at√© ele chegar em 7, onde ele volta para 0
+double anguloMovimento;
+double movimentoEixoX;
+double movimentoEixoY;
+double movimentoEixoZ;
+
+// quando o frameCaminhadaAtual chega a 0, keyFrameCaminhadaAtual È incrementado
+// atÈ ele chegar em 7, onde ele volta para 0
 int frameCaminhadaAtual = QUADROS_ENTRE_KEYFRAMES, keyFrameCaminhadaAtual = 0;
 
 // quando alguem anda, ele realiza um leve deslocamento vertical de cima para
-// baixo com cada passo, isso √© calculado nesta fun√ß√£o
+// baixo com cada passo, isso È calculado nesta funÁ„o
 double movimentacaoVertical(double angulo_coxa_esq, double angulo_panturr_esq,
                             double angulo_coxa_dir, double angulo_panturr_dir) {
 
@@ -41,20 +46,20 @@ double movimentacaoVertical(double angulo_coxa_esq, double angulo_panturr_esq,
   mov_perna_direita =
       LEG_HEIGHT - (movimentacao_coxa + movimentacao_panturrilha);
 
-  // compara a movimenta√ß√£o vertical de ambas as pernas, a que tiver menor
-  // deslocamento √© a perna que est√° tocando o ch√£o, logo √© retornada
+  // compara a movimentaÁ„o vertical de ambas as pernas, a que tiver menor
+  // deslocamento È a perna que est· tocando o ch„o, logo È retornada
   return (mov_perna_esquerda <= mov_perna_direita) ? (-mov_perna_esquerda)
                                                    : (-mov_perna_direita);
 }
 
 void animacaoCaminhada() {
-  // as variaveis de diferenca s√£o definidas em cada frame baseado no livro
-  // de anima√ß√£o "Moving Pictures" (menos as animacoes dos bracos, elas foram
-  // feitas pelo Lucas mesmo). No total s√£o 8, por isso o n√∫mero de keyFrames √©
-  // 8 tamb√©m (switch case de 0 a 7);
-  // as variaveis de soma (que estao na funcao calculaAnimacaoCaminhada) s√£o
+  // as variaveis de diferenca s„o definidas em cada frame baseado no livro
+  // de animaÁ„o "Moving Pictures" (menos as animacoes dos bracos, elas foram
+  // feitas pelo Lucas mesmo). No total s„o 8, por isso o n˙mero de keyFrames È
+  // 8 tambÈm (switch case de 0 a 7);
+  // as variaveis de soma (que estao na funcao calculaAnimacaoCaminhada) s„o
   // calculadas pegando as variaveis de diferenca e dividindo pelo total de
-  // quadros entre keyFrame, com isso √© poss√≠vel ter movimentos intermedi√°rios
+  // quadros entre keyFrame, com isso È possÌvel ter movimentos intermedi·rios
   // entre keyframes
   float diferencaCoxaEsq, diferencaCoxaDir, diferencaPanturrEsq,
       diferencaPanturrDir, diferencaBracoEsq, diferencaBracoDir;
@@ -202,4 +207,49 @@ void calculaAnimacaoCaminhada(float diffCoxaEsq, float diffCoxaDir,
     keyFrameCaminhadaAtual = (keyFrameCaminhadaAtual + 1) % 8;
     frameCaminhadaAtual = QUADROS_ENTRE_KEYFRAMES;
   }
+}
+
+void gesticulacao(enum sentidoMovimento sentido) {
+    switch (sentido) {
+        case 0:
+            if (estado == GEST_CABECA && anguloMovimento <= -8.0) return;
+            if (estado != GEST_CABECA && anguloMovimento <= -100.0) return;
+            if ((estado == GEST_ANTEBRACO_ESQ || estado == GEST_ANTEBRACO_DIR) && anguloMovimento <= -12.0) return;
+            if ((estado == GEST_PANTURRILHA_ESQ || estado == GEST_PANTURRILHA_DIR) && anguloMovimento == 0) return;
+
+            anguloMovimento += -0.5;
+            movimentoEixoX = 1.0;
+            movimentoEixoZ = 0.0;
+            break;
+        case 1:
+            if (estado == GEST_CABECA && anguloMovimento >= 8.0) return;
+            if (estado != GEST_CABECA && anguloMovimento >= 100.0) return;
+            if ((estado == GEST_ANTEBRACO_ESQ || estado == GEST_ANTEBRACO_DIR) && anguloMovimento == 0) return;
+            if ((estado == GEST_PANTURRILHA_ESQ || estado == GEST_PANTURRILHA_DIR) && anguloMovimento >= 90.0) return;
+
+            anguloMovimento += 0.5;
+            movimentoEixoX = 1.0;
+            movimentoEixoZ = 0.0;
+            break;
+        case 2:
+            if (estado == GEST_CABECA && anguloMovimento <= -8.0) return;
+            if (estado != GEST_CABECA && anguloMovimento <= -100.0) return;
+            if (estado == GEST_ANTEBRACO_ESQ || estado == GEST_ANTEBRACO_DIR) return;
+            if (estado == GEST_PANTURRILHA_ESQ || estado == GEST_PANTURRILHA_DIR) return;
+
+            anguloMovimento += -0.5;
+            movimentoEixoX = 0.0;
+            movimentoEixoZ = 1.0;
+            break;
+        case 3:
+            if (estado == GEST_CABECA && anguloMovimento >= 8.0) return;
+            if (estado != GEST_CABECA && anguloMovimento >= 100.0) return;
+            if (estado == GEST_ANTEBRACO_ESQ || estado == GEST_ANTEBRACO_DIR) return;
+            if (estado == GEST_PANTURRILHA_ESQ || estado == GEST_PANTURRILHA_DIR) return;
+
+            anguloMovimento += 0.5;
+            movimentoEixoX = 0.0;
+            movimentoEixoZ = 1.0;
+            break;
+    }
 }
