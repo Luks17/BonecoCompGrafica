@@ -1,7 +1,6 @@
 
-#include "animacao.c"
-#include "camera.c"
-#include "modelo.c"
+#include "camera.h"
+#include "modelo.h"
 
 // Alunos: Eduardo Gimenes, Isadora Menezes e Lucas Ortiz
 
@@ -26,10 +25,11 @@ double keyWalkFrames[2][6];
 double anguloCoxaEsq = 30.0, anguloPanturrEsq = 0.0, anguloCoxaDir = -30.0,
        anguloPanturrDir = 0.0;
 
-double anguloMovimento;
-double movimentoEixoX;
-double movimentoEixoY;
-double movimentoEixoZ;
+enum gesticulacoes gesticulacaoAtual;
+double anguloMovimento[9];
+double movimentoEixoX[9];
+double movimentoEixoY[9];
+double movimentoEixoZ[9];
 
 int main(int argc, char **argv) {
   glutInit(&argc, argv);
@@ -67,7 +67,8 @@ void init() {
   deslocamentoVertical = movimentacaoVertical(anguloCoxaEsq, anguloPanturrEsq,
                                               anguloCoxaDir, anguloPanturrDir);
 
-  estado = NENHUM;
+  estadoInicial();
+  zerarMovimento();
 }
 
 void display() {
@@ -125,18 +126,22 @@ void kbd(unsigned char key, int x, int y) {
     ajustaCoordenada(&posicaoZ, coordz, true);
     ajustaCoordenada(&posicaoX, coordx, true);
     break;
-  case 'i':
-    gesticulacao(FRENTE);
-    break;
-  case 'j':
-    gesticulacao(LADO_ESQUERDO);
-    break;
-  case 'l':
-    gesticulacao(LADO_DIREITO);
-    break;
-  case 'k':
-    gesticulacao(TRAS);
-    break;
+  }
+  if (estado == GESTICULACAO) {
+    switch (key) {
+    case 'i':
+      gesticulacao(FRENTE);
+      break;
+    case 'j':
+      gesticulacao(LADO_ESQUERDO);
+      break;
+    case 'l':
+      gesticulacao(LADO_DIREITO);
+      break;
+    case 'k':
+      gesticulacao(TRAS);
+      break;
+    }
   }
 
   glutPostRedisplay();
@@ -192,6 +197,7 @@ void criaMenu() {
 
 void estadoInicial() {
   estado = NENHUM;
+  gesticulacaoAtual = GEST_NULL;
 
   // retorna camera a posicao inicial
   posicaoX = posicaoY = 0;
@@ -201,10 +207,12 @@ void estadoInicial() {
 }
 
 void zerarMovimento() {
-  anguloMovimento = 0.0;
-  movimentoEixoX = 0.0;
-  movimentoEixoY = 0.0;
-  movimentoEixoZ = 0.0;
+  for (int i = 0; i < 9; i++) {
+    anguloMovimento[i] = 0.0;
+    movimentoEixoX[i] = 0.0;
+    movimentoEixoY[i] = 0.0;
+    movimentoEixoZ[i] = 0.0;
+  }
 }
 
 void menuPrincipal(int option) {
@@ -221,6 +229,7 @@ void menuPrincipal(int option) {
     break;
   case 2:
     printf("Opção 'Voltar a posição inicial' selecionada\n");
+    zerarMovimento();
     estadoInicial();
     break;
   }
@@ -229,45 +238,44 @@ void menuPrincipal(int option) {
 }
 
 void menuSecundario(int option) {
-  estadoInicial();
-  zerarMovimento();
+  estado = GESTICULACAO;
 
   switch (option) {
   case 0:
     printf("Opção 'Perna esquerda' selecionada\n");
-    estado = GEST_PERNA_ESQ;
+    gesticulacaoAtual = GEST_PERNA_ESQ;
     break;
   case 1:
     printf("Opção 'Perna direita' selecionada\n");
-    estado = GEST_PERNA_DIR;
+    gesticulacaoAtual = GEST_PERNA_DIR;
     break;
   case 2:
     printf("Opção 'Braço esquerdo' selecionada\n");
-    estado = GEST_BRACO_ESQ;
+    gesticulacaoAtual = GEST_BRACO_ESQ;
     break;
   case 3:
     printf("Opção 'Braço direito' selecionada\n");
-    estado = GEST_BRACO_DIR;
+    gesticulacaoAtual = GEST_BRACO_DIR;
     break;
   case 4:
     printf("Opção 'Cabeça' selecionada\n");
-    estado = GEST_CABECA;
+    gesticulacaoAtual = GEST_CABECA;
     break;
   case 5:
     printf("Opção 'Antebraço esquerdo' selecionada\n");
-    estado = GEST_ANTEBRACO_ESQ;
+    gesticulacaoAtual = GEST_ANTEBRACO_ESQ;
     break;
   case 6:
     printf("Opção 'Antebraço direito' selecionada\n");
-    estado = GEST_ANTEBRACO_DIR;
+    gesticulacaoAtual = GEST_ANTEBRACO_DIR;
     break;
   case 7:
     printf("Opção 'Panturrilha esquerda' selecionada\n");
-    estado = GEST_PANTURRILHA_ESQ;
+    gesticulacaoAtual = GEST_PANTURRILHA_ESQ;
     break;
   case 8:
     printf("Opção 'Panturrilha direita' selecionada\n");
-    estado = GEST_PANTURRILHA_DIR;
+    gesticulacaoAtual = GEST_PANTURRILHA_DIR;
     break;
   }
 

@@ -1,10 +1,10 @@
 
 #include "modelo.h"
 
-double anguloMovimento;
-double movimentoEixoX;
-double movimentoEixoY;
-double movimentoEixoZ;
+double anguloMovimento[9];
+double movimentoEixoX[9];
+double movimentoEixoY[9];
+double movimentoEixoZ[9];
 
 void quadril() {
   glPushMatrix();
@@ -32,7 +32,9 @@ void coxa(enum lados lado) {
 
   glScalef(UP_LEG_WIDTH, UP_LEG_HEIGHT, UP_LEG_WIDTH);
 
-  if ((estado == GEST_PERNA_ESQ && lado == 0) || (estado == GEST_PERNA_DIR && lado == 1))
+  if (((gesticulacaoAtual == GEST_PERNA_ESQ && lado == 0) ||
+       (gesticulacaoAtual == GEST_PERNA_DIR && lado == 1)) &&
+      estado == GESTICULACAO)
     glColor3f(0.0, 2.0, 0.0);
   else
     glColor3f(0.5, 0.5, 0.5);
@@ -58,8 +60,11 @@ void panturrilha(enum lados lado) {
 
   glScalef(LO_LEG_WIDTH, LO_LEG_HEIGHT, LO_LEG_WIDTH);
 
-  if ((estado == GEST_PERNA_ESQ && lado == 0) || (estado == GEST_PERNA_DIR && lado == 1)
-      || (estado == GEST_PANTURRILHA_ESQ && lado == 0) || (estado == GEST_PANTURRILHA_DIR && lado == 1))
+  if (((gesticulacaoAtual == GEST_PERNA_ESQ && lado == 0) ||
+       (gesticulacaoAtual == GEST_PERNA_DIR && lado == 1) ||
+       (gesticulacaoAtual == GEST_PANTURRILHA_ESQ && lado == 0) ||
+       (gesticulacaoAtual == GEST_PANTURRILHA_DIR && lado == 1)) &&
+      estado == GESTICULACAO)
     glColor3f(0.0, 2.0, 0.0);
   else
     glColor3f(1.0, 0.0, 1.0);
@@ -87,8 +92,11 @@ void pe(enum lados lado) {
 
   glScalef(FOOT_WIDTH, FOOT_HEIGHT, FOOT);
 
-  if ((estado == GEST_PERNA_ESQ && lado == 0) || (estado == GEST_PERNA_DIR && lado == 1)
-      || (estado == GEST_PANTURRILHA_ESQ && lado == 0) || (estado == GEST_PANTURRILHA_DIR && lado == 1))
+  if (((gesticulacaoAtual == GEST_PERNA_ESQ && lado == 0) ||
+       (gesticulacaoAtual == GEST_PERNA_DIR && lado == 1) ||
+       (gesticulacaoAtual == GEST_PANTURRILHA_ESQ && lado == 0) ||
+       (gesticulacaoAtual == GEST_PANTURRILHA_DIR && lado == 1)) &&
+      estado == GESTICULACAO)
     glColor3f(0.0, 2.0, 0.0);
   else
     glColor3f(0.5, 0.0, 1.0);
@@ -105,8 +113,12 @@ void perna(enum lados lado) {
   if (estado == CAMINHADA)
     glRotatef(keyWalkFrames[lado][3], 1.0, 0.0, 0.0);
 
-  if ((estado == GEST_PERNA_ESQ && lado == 0) || (estado == GEST_PERNA_DIR && lado == 1))
-    glRotatef(anguloMovimento, movimentoEixoX, movimentoEixoY, movimentoEixoZ);
+  if (estado == GESTICULACAO) {
+    glRotatef(anguloMovimento[GEST_PERNA_ESQ + lado],
+              movimentoEixoX[GEST_PERNA_ESQ + lado],
+              movimentoEixoY[GEST_PERNA_ESQ + lado],
+              movimentoEixoZ[GEST_PERNA_ESQ + lado]);
+  }
 
   coxa(lado);
   glTranslatef(0.0, -UP_LEG_HEIGHT * 0.75, 0.0);
@@ -114,8 +126,12 @@ void perna(enum lados lado) {
   if (estado == CAMINHADA)
     glRotatef(keyWalkFrames[lado][4], 1.0, 0.0, 0.0);
 
-  if ((estado == GEST_PANTURRILHA_ESQ && lado == 0) || (estado == GEST_PANTURRILHA_DIR && lado == 1))
-    glRotatef(anguloMovimento, movimentoEixoX, movimentoEixoY, movimentoEixoZ);
+  if (estado == GESTICULACAO) {
+    glRotatef(anguloMovimento[GEST_PANTURRILHA_ESQ + lado],
+              movimentoEixoX[GEST_PANTURRILHA_ESQ + lado],
+              movimentoEixoY[GEST_PANTURRILHA_ESQ + lado],
+              movimentoEixoZ[GEST_PANTURRILHA_ESQ + lado]);
+  }
 
   panturrilha(lado);
   glTranslatef(0.0, -LO_LEG_HEIGHT * 0.625, 0.0);
@@ -173,8 +189,11 @@ void antebraco(enum lados lado) {
 
   glPopMatrix();
 
-  if ((estado == GEST_BRACO_ESQ && lado == 0) || (estado == GEST_BRACO_DIR && lado == 1)
-      || (estado == GEST_ANTEBRACO_ESQ && lado == 0) || (estado == GEST_ANTEBRACO_DIR && lado == 1))
+  if (((gesticulacaoAtual == GEST_BRACO_ESQ && lado == 0) ||
+       (gesticulacaoAtual == GEST_BRACO_DIR && lado == 1) ||
+       (gesticulacaoAtual == GEST_ANTEBRACO_ESQ && lado == 0) ||
+       (gesticulacaoAtual == GEST_ANTEBRACO_DIR && lado == 1)) &&
+      estado == GESTICULACAO)
     glColor3f(0.0, 2.0, 0.0);
   else
     glColor3f(0.5, 0.1, 0.3);
@@ -200,7 +219,9 @@ void bracoSuperior(enum lados lado) {
 
   glPopMatrix();
 
-  if ((estado == GEST_BRACO_ESQ && lado == 0) || (estado == GEST_BRACO_DIR && lado == 1))
+  if (((gesticulacaoAtual == GEST_BRACO_ESQ && lado == 0) ||
+       (gesticulacaoAtual == GEST_BRACO_DIR && lado == 1)) &&
+      estado == GESTICULACAO)
     glColor3f(0.0, 2.0, 0.0);
   else
     glColor3f(0.5, 0.1, 0.3);
@@ -219,13 +240,21 @@ void braco(enum lados lado) {
   if (estado == CAMINHADA)
     glRotatef(keyWalkFrames[lado][2], 1.0, 0.0, 0.0);
 
-  if ((estado == GEST_BRACO_ESQ && lado == 0) || (estado == GEST_BRACO_DIR && lado == 1))
-    glRotatef(anguloMovimento, movimentoEixoX, movimentoEixoY, movimentoEixoZ);
+  if (estado == GESTICULACAO) {
+    glRotatef(anguloMovimento[GEST_BRACO_ESQ + lado],
+              movimentoEixoX[GEST_BRACO_ESQ + lado],
+              movimentoEixoY[GEST_BRACO_ESQ + lado],
+              movimentoEixoZ[GEST_BRACO_ESQ + lado]);
+  }
 
   bracoSuperior(lado);
 
-  if ((estado == GEST_ANTEBRACO_ESQ && lado == 0) || (estado == GEST_ANTEBRACO_DIR && lado == 1))
-    glRotatef(anguloMovimento, movimentoEixoX, movimentoEixoY, movimentoEixoZ);
+  if (estado == GESTICULACAO) {
+    glRotatef(anguloMovimento[GEST_ANTEBRACO_ESQ + lado],
+              movimentoEixoX[GEST_ANTEBRACO_ESQ + lado],
+              movimentoEixoY[GEST_ANTEBRACO_ESQ + lado],
+              movimentoEixoZ[GEST_ANTEBRACO_ESQ + lado]);
+  }
 
   glTranslatef(0.0, -UP_ARM_HEIGHT * 0.875 - LO_ARM_JOINT_SIZE * 2, 0.0);
   antebraco(lado);
@@ -266,10 +295,12 @@ void cabeca() {
 
   glPushMatrix();
 
-  if (estado == GEST_CABECA)
-    glRotatef(anguloMovimento, movimentoEixoX, movimentoEixoY, movimentoEixoZ);
+  if (estado == GESTICULACAO) {
+    glRotatef(anguloMovimento[GEST_CABECA], movimentoEixoX[GEST_CABECA],
+              movimentoEixoY[GEST_CABECA], movimentoEixoZ[GEST_CABECA]);
+  }
 
-  if (estado == GEST_CABECA)
+  if (gesticulacaoAtual == GEST_CABECA && estado == GESTICULACAO)
     glColor3f(0.0, 2.0, 0.0);
   else
     glColor3f(0.5, 0.0, 1.0);

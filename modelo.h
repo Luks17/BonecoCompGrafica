@@ -50,19 +50,29 @@ extern double anguloCoxaEsq, anguloPanturrEsq, anguloCoxaDir, anguloPanturrDir;
 extern int frameCaminhadaAtual, keyFrameCaminhadaAtual;
 
 enum lados { ESQUERDA, DIREITA };
-enum estadoAtual { CAMINHADA, GEST_PERNA_ESQ, GEST_PERNA_DIR,
-       GEST_BRACO_ESQ, GEST_BRACO_DIR, GEST_CABECA,
-       GEST_ANTEBRACO_ESQ, GEST_ANTEBRACO_DIR,
-       GEST_PANTURRILHA_ESQ, GEST_PANTURRILHA_DIR, NENHUM };
+enum estadoAtual { CAMINHADA, GESTICULACAO, NENHUM };
+enum gesticulacoes {
+  GEST_PERNA_ESQ,
+  GEST_PERNA_DIR,
+  GEST_BRACO_ESQ,
+  GEST_BRACO_DIR,
+  GEST_CABECA,
+  GEST_ANTEBRACO_ESQ,
+  GEST_ANTEBRACO_DIR,
+  GEST_PANTURRILHA_ESQ,
+  GEST_PANTURRILHA_DIR,
+  GEST_NULL
+};
 
+extern enum gesticulacoes gesticulacaoAtual;
 extern enum estadoAtual estado;
 extern _Bool animacaoEstaPausada;
 
 enum sentidoMovimento { FRENTE, TRAS, LADO_ESQUERDO, LADO_DIREITO };
-extern double anguloMovimento;
-extern double movimentoEixoX;
-extern double movimentoEixoY;
-extern double movimentoEixoZ;
+extern double anguloMovimento[9];
+extern double movimentoEixoX[9];
+extern double movimentoEixoY[9];
+extern double movimentoEixoZ[9];
 
 void init();
 void display();
@@ -92,5 +102,6 @@ double movimentacaoVertical(double, double, double, double);
 void animacaoCaminhada();
 void calculaAnimacaoCaminhada(float, float, float, float, float, float);
 void gesticulacao(enum sentidoMovimento);
+void zerarMovimento();
 
 #endif

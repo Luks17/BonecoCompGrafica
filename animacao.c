@@ -1,10 +1,10 @@
 
 #include "modelo.h"
 
-double anguloMovimento;
-double movimentoEixoX;
-double movimentoEixoY;
-double movimentoEixoZ;
+double anguloMovimento[9];
+double movimentoEixoX[9];
+double movimentoEixoY[9];
+double movimentoEixoZ[9];
 
 // quando o frameCaminhadaAtual chega a 0, keyFrameCaminhadaAtual é incrementado
 // até ele chegar em 7, onde ele volta para 0
@@ -210,46 +210,82 @@ void calculaAnimacaoCaminhada(float diffCoxaEsq, float diffCoxaDir,
 }
 
 void gesticulacao(enum sentidoMovimento sentido) {
-    switch (sentido) {
-        case 0:
-            if (estado == GEST_CABECA && anguloMovimento <= -8.0) return;
-            if (estado != GEST_CABECA && anguloMovimento <= -100.0) return;
-            if ((estado == GEST_ANTEBRACO_ESQ || estado == GEST_ANTEBRACO_DIR) && anguloMovimento <= -12.0) return;
-            if ((estado == GEST_PANTURRILHA_ESQ || estado == GEST_PANTURRILHA_DIR) && anguloMovimento == 0) return;
+  switch (sentido) {
+  case 0:
+    if (gesticulacaoAtual == GEST_CABECA &&
+        anguloMovimento[gesticulacaoAtual] <= -8.0)
+      return;
+    if (gesticulacaoAtual != GEST_CABECA &&
+        anguloMovimento[gesticulacaoAtual] <= -100.0)
+      return;
+    if ((gesticulacaoAtual == GEST_ANTEBRACO_ESQ ||
+         gesticulacaoAtual == GEST_ANTEBRACO_DIR) &&
+        anguloMovimento[gesticulacaoAtual] <= -12.0)
+      return;
+    if ((gesticulacaoAtual == GEST_PANTURRILHA_ESQ ||
+         gesticulacaoAtual == GEST_PANTURRILHA_DIR) &&
+        anguloMovimento[gesticulacaoAtual] == 0)
+      return;
 
-            anguloMovimento += -0.5;
-            movimentoEixoX = 1.0;
-            movimentoEixoZ = 0.0;
-            break;
-        case 1:
-            if (estado == GEST_CABECA && anguloMovimento >= 8.0) return;
-            if (estado != GEST_CABECA && anguloMovimento >= 100.0) return;
-            if ((estado == GEST_ANTEBRACO_ESQ || estado == GEST_ANTEBRACO_DIR) && anguloMovimento == 0) return;
-            if ((estado == GEST_PANTURRILHA_ESQ || estado == GEST_PANTURRILHA_DIR) && anguloMovimento >= 90.0) return;
+    anguloMovimento[gesticulacaoAtual] += -0.5;
+    movimentoEixoX[gesticulacaoAtual] = 1.0;
+    movimentoEixoZ[gesticulacaoAtual] = 0.0;
+    break;
+  case 1:
+    if (gesticulacaoAtual == GEST_CABECA &&
+        anguloMovimento[gesticulacaoAtual] >= 8.0)
+      return;
+    if (gesticulacaoAtual != GEST_CABECA &&
+        anguloMovimento[gesticulacaoAtual] >= 100.0)
+      return;
+    if ((gesticulacaoAtual == GEST_ANTEBRACO_ESQ ||
+         gesticulacaoAtual == GEST_ANTEBRACO_DIR) &&
+        anguloMovimento[gesticulacaoAtual] == 0)
+      return;
+    if ((gesticulacaoAtual == GEST_PANTURRILHA_ESQ ||
+         gesticulacaoAtual == GEST_PANTURRILHA_DIR) &&
+        anguloMovimento[gesticulacaoAtual] >= 90.0)
+      return;
 
-            anguloMovimento += 0.5;
-            movimentoEixoX = 1.0;
-            movimentoEixoZ = 0.0;
-            break;
-        case 2:
-            if (estado == GEST_CABECA && anguloMovimento <= -8.0) return;
-            if (estado != GEST_CABECA && anguloMovimento <= -100.0) return;
-            if (estado == GEST_ANTEBRACO_ESQ || estado == GEST_ANTEBRACO_DIR) return;
-            if (estado == GEST_PANTURRILHA_ESQ || estado == GEST_PANTURRILHA_DIR) return;
+    anguloMovimento[gesticulacaoAtual] += 0.5;
+    movimentoEixoX[gesticulacaoAtual] = 1.0;
+    movimentoEixoZ[gesticulacaoAtual] = 0.0;
+    break;
+  case 2:
+    if (gesticulacaoAtual == GEST_CABECA &&
+        anguloMovimento[gesticulacaoAtual] <= -8.0)
+      return;
+    if (gesticulacaoAtual != GEST_CABECA &&
+        anguloMovimento[gesticulacaoAtual] <= -100.0)
+      return;
+    if (gesticulacaoAtual == GEST_ANTEBRACO_ESQ ||
+        gesticulacaoAtual == GEST_ANTEBRACO_DIR)
+      return;
+    if (gesticulacaoAtual == GEST_PANTURRILHA_ESQ ||
+        gesticulacaoAtual == GEST_PANTURRILHA_DIR)
+      return;
 
-            anguloMovimento += -0.5;
-            movimentoEixoX = 0.0;
-            movimentoEixoZ = 1.0;
-            break;
-        case 3:
-            if (estado == GEST_CABECA && anguloMovimento >= 8.0) return;
-            if (estado != GEST_CABECA && anguloMovimento >= 100.0) return;
-            if (estado == GEST_ANTEBRACO_ESQ || estado == GEST_ANTEBRACO_DIR) return;
-            if (estado == GEST_PANTURRILHA_ESQ || estado == GEST_PANTURRILHA_DIR) return;
+    anguloMovimento[gesticulacaoAtual] += -0.5;
+    movimentoEixoX[gesticulacaoAtual] = 0.0;
+    movimentoEixoZ[gesticulacaoAtual] = 1.0;
+    break;
+  case 3:
+    if (gesticulacaoAtual == GEST_CABECA &&
+        anguloMovimento[gesticulacaoAtual] >= 8.0)
+      return;
+    if (gesticulacaoAtual != GEST_CABECA &&
+        anguloMovimento[gesticulacaoAtual] >= 100.0)
+      return;
+    if (gesticulacaoAtual == GEST_ANTEBRACO_ESQ ||
+        gesticulacaoAtual == GEST_ANTEBRACO_DIR)
+      return;
+    if (gesticulacaoAtual == GEST_PANTURRILHA_ESQ ||
+        gesticulacaoAtual == GEST_PANTURRILHA_DIR)
+      return;
 
-            anguloMovimento += 0.5;
-            movimentoEixoX = 0.0;
-            movimentoEixoZ = 1.0;
-            break;
-    }
+    anguloMovimento[gesticulacaoAtual] += 0.5;
+    movimentoEixoX[gesticulacaoAtual] = 0.0;
+    movimentoEixoZ[gesticulacaoAtual] = 1.0;
+    break;
+  }
 }
